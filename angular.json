@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "media-finder": {
+    "mif-projects-frontend-candidate-test": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/media-finder",
+            "outputPath": "dist/mif-projects-frontend-candidate-test",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -86,18 +86,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "media-finder:build"
+            "browserTarget": "mif-projects-frontend-candidate-test:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "media-finder:build:production"
+              "browserTarget": "mif-projects-frontend-candidate-test:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "media-finder:build"
+            "browserTarget": "mif-projects-frontend-candidate-test:build"
           }
         },
         "test": {
@@ -134,15 +134,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "media-finder:serve"
+            "devServerTarget": "mif-projects-frontend-candidate-test:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "media-finder:serve:production"
+              "devServerTarget": "mif-projects-frontend-candidate-test:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "media-finder"
+  "defaultProject": "mif-projects-frontend-candidate-test"
 }

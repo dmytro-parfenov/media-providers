@@ -1,6 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {ItunesSearch} from './itunes/itunes-search';
 
+/**
+ * @see https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +16,6 @@ export class ItunesDataService {
 
   search(artist: string, entity = 'album') {
     return this.httpClient
-      .jsonp(`${this.resourceUrl}/search?term=${artist}&entity=${entity}`, 'callback');
+      .jsonp<ItunesSearch>(`${this.resourceUrl}/search?term=${artist}&entity=${entity}`, 'callback');
   }
 }

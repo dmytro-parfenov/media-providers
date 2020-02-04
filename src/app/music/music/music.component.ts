@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {SearchService} from '../search.service';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-music',
@@ -8,9 +10,14 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 })
 export class MusicComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly searchService: SearchService) { }
 
   ngOnInit() {
+    this.searchService.do({artist: 'guns and roses'}).pipe(
+      tap(results => {
+        console.log(results);
+      })
+    ).subscribe();
   }
 
 }

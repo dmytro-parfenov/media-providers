@@ -1,9 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {forkJoin, Observable, of} from 'rxjs';
 import {SERVICE_PROVIDERS} from './service-key.provider';
 import {Provider} from './provider/provider';
-import {map} from 'rxjs/operators';
-import {AlbumMedia} from './shared/album-media';
+import {catchError, map} from 'rxjs/operators';
+import {Media} from './shared/media';
 import {SearchParams} from './search-params';
 
 @Injectable({
@@ -11,18 +11,23 @@ import {SearchParams} from './search-params';
 })
 export class SearchService {
 
-  constructor(@Inject(SERVICE_PROVIDERS) private readonly providers: Provider[]) {}
+  constructor(@Optional() @Inject(SERVICE_PROVIDERS) private readonly providers: Provider[]) {}
 
-  do({artist}: SearchParams) {
-    const requests$ = this.providers.reduce<Observable<AlbumMedia[]>[]>((previousProvider, currentProvider) => {
-        const search$ = currentProvider.search(artist);
+  do(params: SearchParams) {
+    if (!this.providers) {
+      console.error(`Service providers unavailable`);
+      return of<Media[]>([]);
+    }
+
+    const requests$ = this.providers.reduce<Observable<Media[]>[]>((previousProvider, currentProvider) => {
+        const search$ = currentProvider.search(params).pipe(catchError(() => of([])));
         return previousProvider.concat(search$);
       },
       []
     );
 
-    return forkJoin<AlbumMedia[]>(requests$).pipe(
-      map<[AlbumMedia[]], AlbumMedia[]>(response => [].concat(...response))
+    return forkJoin<Media[]>(requests$).pipe(
+      map<[Media[]], Media[]>(response => [].concat(...response))
     );
   }
 }

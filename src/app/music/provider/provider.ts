@@ -1,6 +1,7 @@
 import {Observable} from 'rxjs';
-import {AlbumMedia} from '../shared/album-media';
+import {Media} from '../shared/media';
+import {SearchParams} from '../search-params';
 
 export interface Provider<T = any> {
-  search(artist: string): Observable<AlbumMedia<T>[]>;
+  search(params: SearchParams): Observable<Media<T>[]>;
 }

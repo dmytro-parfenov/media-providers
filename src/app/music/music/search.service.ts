@@ -1,9 +1,9 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {forkJoin, Observable, of} from 'rxjs';
+import {forkJoin, NEVER, Observable, of} from 'rxjs';
 import {SERVICE_PROVIDERS} from './service-key.provider';
 import {Provider} from './provider/provider';
 import {catchError, map} from 'rxjs/operators';
-import {Media} from './shared/media';
+import {Media} from './media/media';
 import {SearchParams} from './search-params';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class SearchService {
   do(params: SearchParams) {
     if (!this.providers) {
       console.error(`Service providers unavailable`);
-      return of<Media[]>([]);
+      return NEVER;
     }
 
     const requests$ = this.providers.reduce<Observable<Media[]>[]>((previousProvider, currentProvider) => {

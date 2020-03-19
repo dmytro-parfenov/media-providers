@@ -1,4 +1,5 @@
 export enum ServiceProvider {
   Deezer = 'Deezer',
-  iTunes = 'iTunes'
+  iTunes = 'iTunes',
+  Unknown = 'Unknown'
 }

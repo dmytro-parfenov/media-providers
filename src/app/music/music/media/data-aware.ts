@@ -1,3 +1,3 @@
-export interface DataAware<T = any> {
-  data: T;
+export interface DataAware<D = any> {
+  data: D;
 }

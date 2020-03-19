@@ -2,11 +2,9 @@ import {Injectable} from '@angular/core';
 import {DeezerDataService} from '../../../shared/api/deezer-data.service';
 import {Provider} from '../provider';
 import {DeezerAlbum} from './deezer-album';
-import {Media} from '../../media/media';
 import {catchError, map} from 'rxjs/operators';
-import {ServiceProvider} from '../../../shared/service-provider.enum';
 import {of, throwError} from 'rxjs';
-import {DeezerSearch} from '../../../shared/api/deezer/deezer-search';
+import {DeezerSearchResult} from '../../../shared/api/deezer/deezer-search-result';
 import {SearchParams} from '../../search-params';
 
 @Injectable({
@@ -18,14 +16,13 @@ export class DeezerProviderService implements Provider<DeezerAlbum> {
 
   search({artist}: SearchParams) {
     if (!artist) {
-      return of<Media<DeezerAlbum>[]>([]);
+      return of<DeezerAlbum[]>([]);
     }
 
     return this.deezerDataService.searchAlbum(artist).pipe(
-      map<DeezerSearch, Media<DeezerAlbum>[]>(response =>
-        response.data.map(result => ({type: ServiceProvider.Deezer, data: result}))),
+      map<DeezerSearchResult, DeezerAlbum[]>(response => response.data),
       catchError(error => {
-        console.error(`Unable to load data with Deezer provider`);
+        console.error(`Unable to load data using Deezer provider`);
         return throwError(error);
       }),
     );

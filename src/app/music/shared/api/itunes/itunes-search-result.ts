@@ -1,3 +1,3 @@
-export interface ItunesSearchResult {
-  results: any[];
+export interface ItunesSearchResult<R = any> {
+  results: R[];
 }

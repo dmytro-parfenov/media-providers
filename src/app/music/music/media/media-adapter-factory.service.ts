@@ -1,7 +1,7 @@
 import {Injectable, Injector, StaticProvider, ValueProvider} from '@angular/core';
 import {ServiceProvider} from '../../shared/service-provider.enum';
-import {DeezerComponent} from './adapter/deezer/deezer.component';
-import {ItunesComponent} from './adapter/itunes/itunes.component';
+import {DeezerAdapterComponent} from './adapter/deezer-adapter/deezer-adapter.component';
+import {ItunesAdapterComponent} from './adapter/itunes-adapter/itunes-adapter.component';
 import {ComponentPortal, ComponentType} from '@angular/cdk/portal';
 import {Media} from '../shared/media/media';
 import {MediaAdapterRef} from './adapter/media-adapter-ref';
@@ -19,9 +19,9 @@ export class MediaAdapterFactoryService {
 
     switch (media.type) {
       case ServiceProvider.Deezer:
-        return this.createPortal(DeezerComponent, provider);
+        return this.createPortal(DeezerAdapterComponent, provider);
       case ServiceProvider.iTunes:
-        return this.createPortal(ItunesComponent, provider);
+        return this.createPortal(ItunesAdapterComponent, provider);
     }
 
     throw new Error(`Component type does not defined for ${media.type} service provider`);

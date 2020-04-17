@@ -1,3 +1,3 @@
-export interface DeezerSearchResult {
-  data: any[];
+export interface DeezerSearchResult<D = any> {
+  data: D[];
 }

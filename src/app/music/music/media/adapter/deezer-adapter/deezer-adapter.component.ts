@@ -3,12 +3,12 @@ import {MediaAdapterRef} from '../media-adapter-ref';
 import {DeezerContext} from '../../../shared/provider/deezer/deezer-context';
 
 @Component({
-  selector: 'app-deezer',
-  templateUrl: './deezer.component.html',
-  styleUrls: ['./deezer.component.scss'],
+  selector: 'app-deezer-adapter',
+  templateUrl: './deezer-adapter.component.html',
+  styleUrls: ['./deezer-adapter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DeezerComponent implements OnInit {
+export class DeezerAdapterComponent implements OnInit {
 
   constructor(@Optional() private readonly mediaAdapterRef: MediaAdapterRef<DeezerContext>) { }
 

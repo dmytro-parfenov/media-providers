@@ -1,3 +1,3 @@
 import {ProviderContext} from '../provider-context';
 
-export type DeezerContext<T = any> = ProviderContext<T>;
+export type DeezerContext<D = any> = ProviderContext<D>;

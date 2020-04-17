@@ -3,12 +3,12 @@ import {MediaAdapterRef} from '../media-adapter-ref';
 import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
 
 @Component({
-  selector: 'app-itunes',
-  templateUrl: './itunes.component.html',
-  styleUrls: ['./itunes.component.scss'],
+  selector: 'app-itunes-adapter',
+  templateUrl: './itunes-adapter.component.html',
+  styleUrls: ['./itunes-adapter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItunesComponent implements OnInit {
+export class ItunesAdapterComponent implements OnInit {
 
   constructor(@Optional() private readonly mediaAdapterRef: MediaAdapterRef<ItunesContext>) { }
 

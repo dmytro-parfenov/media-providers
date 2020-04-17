@@ -11,13 +11,13 @@ import {SERVICE_PROVIDER} from './music/service-provider';
 import {SearchParamsResolverService} from './resolver/search-params-resolver.service';
 import {SearchParamsService} from './music/search-params.service';
 import {MediaComponent} from './music/media/media.component';
-import {ItunesComponent} from './music/media/adapter/itunes/itunes.component';
-import {DeezerComponent} from './music/media/adapter/deezer/deezer.component';
+import {ItunesAdapterComponent} from './music/media/adapter/itunes-adapter/itunes-adapter.component';
+import {DeezerAdapterComponent} from './music/media/adapter/deezer-adapter/deezer-adapter.component';
 import {PortalModule} from '@angular/cdk/portal';
 
 
 @NgModule({
-  declarations: [MusicComponent, MediaComponent, ItunesComponent, DeezerComponent],
+  declarations: [MusicComponent, MediaComponent, ItunesAdapterComponent, DeezerAdapterComponent],
   imports: [
     CommonModule,
     MusicRoutingModule,

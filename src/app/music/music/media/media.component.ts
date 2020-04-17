@@ -12,10 +12,10 @@ import {ComponentPortal} from '@angular/cdk/portal';
 export class MediaComponent {
 
   @Input() set media(media: Media) {
-    this.mediaPortal = this.mediaFactoryService.createComponentPortal(media);
+    this.portal = this.mediaFactoryService.resolvePortal(media);
   }
 
-  mediaPortal: ComponentPortal<any>;
+  portal: ComponentPortal<any>;
 
   constructor(private readonly mediaFactoryService: MediaFactoryService) { }
 

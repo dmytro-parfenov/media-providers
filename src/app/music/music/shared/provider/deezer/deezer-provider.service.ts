@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {DeezerDataService} from '../../../shared/api/deezer-data.service';
+import {DeezerDataService} from '../../../../shared/api/deezer-data.service';
 import {Provider} from '../provider';
 import {catchError, map} from 'rxjs/operators';
 import {of, throwError} from 'rxjs';
-import {DeezerSearchResult} from '../../../shared/api/deezer/deezer-search-result';
-import {SearchParams} from '../../search-params';
+import {DeezerSearchResult} from '../../../../shared/api/deezer/deezer-search-result';
+import {SearchParams} from '../../../search-params';
 import {DeezerContext} from './deezer-context';
 import {ProviderContextType} from '../provider-context-type.enum';
 

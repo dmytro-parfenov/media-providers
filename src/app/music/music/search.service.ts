@@ -1,13 +1,13 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {forkJoin, NEVER, Observable, of} from 'rxjs';
 import {SERVICE_PROVIDER} from './service-provider';
-import {Provider} from './provider/provider';
+import {Provider} from './shared/provider/provider';
 import {catchError, map} from 'rxjs/operators';
-import {Media} from './media/media';
+import {Media} from './shared/media/media';
 import {SearchParams} from './search-params';
 import {ServiceProvider} from '../shared/service-provider.enum';
-import {ItunesProviderService} from './provider/itunes/itunes-provider.service';
-import {DeezerProviderService} from './provider/deezer/deezer-provider.service';
+import {ItunesProviderService} from './shared/provider/itunes/itunes-provider.service';
+import {DeezerProviderService} from './shared/provider/deezer/deezer-provider.service';
 
 @Injectable({
   providedIn: 'root'

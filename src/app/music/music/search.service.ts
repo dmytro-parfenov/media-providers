@@ -24,7 +24,7 @@ export class SearchService {
 
     const requests$ = this.providers.reduce<Observable<Media[]>[]>((previousResults, provider) => {
         const searchResults$ = provider.search(params).pipe(
-          map(results => results.map<Media>(result => ({type: this.resolveProviderType(provider), context: result}))),
+          map<any[], Media[]>(results => results.map<Media>(result => ({type: this.resolveProviderType(provider), context: result}))),
           catchError(() => of([]))
         );
         return previousResults.concat(searchResults$);
@@ -32,8 +32,8 @@ export class SearchService {
       []
     );
 
-    return forkJoin<Media[]>(requests$).pipe(
-      map<[Media[]], Media[]>(response => [].concat(...response))
+    return forkJoin<Observable<Media[]>[]>(requests$).pipe(
+      map<Media[][], Media[]>(response => [].concat(...response))
     );
   }
 

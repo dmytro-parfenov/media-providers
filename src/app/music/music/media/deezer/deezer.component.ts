@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, Optional} from '@angular/core';
+import {ItunesContext} from '../../shared/provider/itunes/itunes-context';
+import {DEEZER_CONTEXT} from './deezer-context-key';
 
 @Component({
   selector: 'app-deezer',
@@ -8,9 +10,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class DeezerComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Optional() @Inject(DEEZER_CONTEXT) private readonly context: ItunesContext) { }
 
   ngOnInit() {
+    console.log(this.context);
   }
 
 }

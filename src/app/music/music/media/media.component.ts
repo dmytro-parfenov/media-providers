@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Media} from '../shared/media/media';
 import {MediaFactoryService} from './media-factory.service';
 import {ComponentPortal} from '@angular/cdk/portal';
@@ -9,19 +9,14 @@ import {ComponentPortal} from '@angular/cdk/portal';
   styleUrls: ['./media.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MediaComponent implements OnInit {
+export class MediaComponent {
 
   @Input() set media(media: Media) {
-    const componentType = this.mediaFactoryService.resolveComponentType(media.type);
-
-    this.mediaPortal = new ComponentPortal(componentType);
+    this.mediaPortal = this.mediaFactoryService.createComponentPortal(media);
   }
 
   mediaPortal: ComponentPortal<any>;
 
   constructor(private readonly mediaFactoryService: MediaFactoryService) { }
-
-  ngOnInit() {
-  }
 
 }

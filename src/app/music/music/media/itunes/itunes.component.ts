@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, Optional} from '@angular/core';
+import {ITUNES_CONTEXT} from './itunes-context-key';
+import {ItunesContext} from '../../shared/provider/itunes/itunes-context';
 
 @Component({
   selector: 'app-itunes',
@@ -8,9 +10,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class ItunesComponent implements OnInit {
 
-  constructor() { }
+  constructor(@Optional() @Inject(ITUNES_CONTEXT) private readonly context: ItunesContext) { }
 
   ngOnInit() {
+    console.log(this.context);
   }
 
 }

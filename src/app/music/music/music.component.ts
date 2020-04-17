@@ -6,14 +6,14 @@ import {ResolvedData} from './resolved-data';
 import {SearchParamsService} from './search-params.service';
 import {SearchParams} from './search-params';
 import {Media} from './shared/media/media';
-import {MediaFactoryService} from './media/media-factory.service';
+import {MediaAdapterFactoryService} from './media/media-adapter-factory.service';
 
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [MediaFactoryService]
+  providers: [MediaAdapterFactoryService]
 })
 export class MusicComponent implements OnInit {
 

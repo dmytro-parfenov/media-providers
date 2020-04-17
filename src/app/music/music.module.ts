@@ -11,8 +11,8 @@ import {SERVICE_PROVIDER} from './music/service-provider';
 import {SearchParamsResolverService} from './resolver/search-params-resolver.service';
 import {SearchParamsService} from './music/search-params.service';
 import {MediaComponent} from './music/media/media.component';
-import {ItunesComponent} from './music/media/itunes/itunes.component';
-import {DeezerComponent} from './music/media/deezer/deezer.component';
+import {ItunesComponent} from './music/media/adapter/itunes/itunes.component';
+import {DeezerComponent} from './music/media/adapter/deezer/deezer.component';
 import {PortalModule} from '@angular/cdk/portal';
 
 

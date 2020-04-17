@@ -1,4 +1,4 @@
-import {DataAware} from './data-aware';
+import {ContextAware} from './context-aware';
 import {ServiceTypeAware} from './service-type-aware';
 
-export type Media<D = any> = ServiceTypeAware & DataAware<D>;
+export type Media<C = any> = ServiceTypeAware & ContextAware<C>;

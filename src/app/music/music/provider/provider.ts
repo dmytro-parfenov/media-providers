@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 import {SearchParams} from '../search-params';
 
-export interface Provider<D = any> {
-  search(params: SearchParams): Observable<D[]>;
+export interface Provider<C = any> {
+  search(params: SearchParams): Observable<C[]>;
 }

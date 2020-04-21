@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, Optional} from '@angular/core';
-import {MediaAdapterRef} from '../media-adapter-ref';
+import {AdapterRef} from '../../shared/adapter-ref';
 import {DeezerContext} from '../../../shared/provider/deezer/deezer-context';
 
 @Component({
@@ -10,10 +10,9 @@ import {DeezerContext} from '../../../shared/provider/deezer/deezer-context';
 })
 export class DeezerAdapterComponent implements OnInit {
 
-  constructor(@Optional() private readonly mediaAdapterRef: MediaAdapterRef<DeezerContext>) { }
+  constructor(@Optional() private readonly adapterRef: AdapterRef<DeezerContext>) { }
 
   ngOnInit() {
-    console.log(this.mediaAdapterRef);
   }
 
 }

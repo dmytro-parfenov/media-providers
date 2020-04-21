@@ -1,6 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, Optional} from '@angular/core';
-import {MediaAdapterRef} from '../media-adapter-ref';
+import {AdapterRef} from '../../shared/adapter-ref';
 import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
+import {ItunesAdapterFactoryService} from './itunes-adapter-factory.service';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {AdapterEmitter} from '../../shared/adapter-emitter';
 
 @Component({
   selector: 'app-itunes-adapter',
@@ -10,10 +13,25 @@ import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
 })
 export class ItunesAdapterComponent implements OnInit {
 
-  constructor(@Optional() private readonly mediaAdapterRef: MediaAdapterRef<ItunesContext>) { }
+  portal: ComponentPortal<any>;
+
+  emitter: AdapterEmitter = (data) => {
+    if (!this.adapterRef) {
+      return;
+    }
+
+    this.adapterRef.emit(data);
+  }
+
+  constructor(private readonly itunesAdapterFactoryService: ItunesAdapterFactoryService,
+              @Optional() private readonly adapterRef: AdapterRef<ItunesContext>) { }
 
   ngOnInit() {
-    console.log(this.mediaAdapterRef);
+    if (!this.adapterRef) {
+      return;
+    }
+
+    this.portal = this.itunesAdapterFactoryService.resolvePortal(this.adapterRef.context, this.emitter);
   }
 
 }

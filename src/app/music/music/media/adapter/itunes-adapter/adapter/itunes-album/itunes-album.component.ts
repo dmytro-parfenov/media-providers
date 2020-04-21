@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Optional} from '@angular/core';
 import {AdapterRef} from '../../../../shared/adapter-ref';
 import {ItunesAlbum} from '../../../../../../shared/api/itunes/itunes-album';
+import {DateTime} from 'luxon';
 
 @Component({
   selector: 'app-itunes-album',
@@ -10,10 +11,17 @@ import {ItunesAlbum} from '../../../../../../shared/api/itunes/itunes-album';
 })
 export class ItunesAlbumComponent {
 
-  get title() {
-    return this.adapterRef && this.adapterRef.context.collectionName;
-  }
+  album: ItunesAlbum;
 
-  constructor(@Optional() private readonly adapterRef: AdapterRef<ItunesAlbum>) { }
+  releaseDate = '';
+
+  constructor(@Optional() private readonly adapterRef: AdapterRef<ItunesAlbum>) {
+    if (!adapterRef) {
+      return;
+    }
+
+    this.album = adapterRef.context;
+    this.releaseDate = DateTime.fromISO(this.album.releaseDate).toFormat('yyyy LLL dd');
+  }
 
 }

@@ -1,2 +1,24 @@
-{{title}}
-<br>
+<main *ngIf="album">
+  <mat-card-header>
+    <mat-card-title>{{album.collectionName}}</mat-card-title>
+    <mat-card-subtitle>{{album.artistName}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div class="cover">
+    <img mat-card-sm-image [src]="album.artworkUrl100" alt="cover" class="cover">
+  </div>
+
+  <mat-card-content class="content">
+    <div>Tracks: {{album.trackCount}}</div>
+    <div>Release date: {{releaseDate}}</div>
+    <div>Genre: {{album.primaryGenreName}}</div>
+    <div>Counrty: {{album.country}}</div>
+    <div>Price: {{album.collectionPrice}}{{album.currency}}</div>
+  </mat-card-content>
+
+  <mat-card-actions class="actions">
+    <a mat-button [href]="album.collectionViewUrl" target="_blank">Album</a>
+    <a mat-button [href]="album.artistViewUrl" target="_blank">Artist</a>
+  </mat-card-actions>
+  <mat-card-subtitle class="copyright">{{album.copyright}}</mat-card-subtitle>
+</main>

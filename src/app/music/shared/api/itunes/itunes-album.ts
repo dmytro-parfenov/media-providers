@@ -10,4 +10,5 @@ export interface ItunesAlbum {
   primaryGenreName: string;
   releaseDate: string;
   trackCount: number;
+  currency: string;
 }

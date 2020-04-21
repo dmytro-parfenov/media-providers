@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {DeezerSearchResult} from './deezer/deezer-search-result';
+import {DeezerResult} from './deezer/deezer-result';
 
 /**
  * @see https://developers.deezer.com/api
@@ -16,6 +16,11 @@ export class DeezerDataService {
 
   searchAlbum(artist: string) {
     return this.httpClient
-      .jsonp<DeezerSearchResult>(`${this.resourceUrl}/search/album?q=${artist}&output=jsonp`, 'callback');
+      .jsonp<DeezerResult>(`${this.resourceUrl}/search/album?q=${artist}&output=jsonp`, 'callback');
   }
+
+  getAlbumTracks(albumId: number) {
+    return this.httpClient.jsonp<DeezerResult>(`${this.resourceUrl}/album/${albumId}/tracks&output=jsonp`, 'callback');
+  }
+
 }

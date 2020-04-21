@@ -14,6 +14,23 @@
 
   <mat-card-content class="content">
     <mat-card-subtitle>Tracks: {{album.nb_tracks}}</mat-card-subtitle>
+
+    <div [ngSwitch]="tracks.length > 0" class="toggle-tracks">
+      <button mat-button color="primary" (click)="hideTracks()" *ngSwitchCase="true">hide</button>
+      <button mat-button color="primary" (click)="showTracks()" *ngSwitchCase="false" [disabled]="areTracksLoading">show</button>
+    </div>
+
+    <mat-spinner *ngIf="areTracksLoading" [diameter]="24" class="spinner"></mat-spinner>
+
+    <mat-list *ngIf="tracks.length" class="tracks">
+      <mat-list-item *ngFor="let track of tracks" class="track">
+        <div mat-line>{{track.title}}</div>
+        <div mat-line>
+          <audio [src]="track.preview" controls></audio>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
     <img [src]="album.cover_medium" alt="cover" class="cover">
   </mat-card-content>
 </main>

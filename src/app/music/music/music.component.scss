@@ -1,0 +1,19 @@
+@import 'utils';
+
+section {
+  padding: 16px;
+  display: grid;
+  grid-gap: 16px;
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(5, auto);
+  }
+}

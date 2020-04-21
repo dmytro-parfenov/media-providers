@@ -17,6 +17,7 @@ import {PortalModule} from '@angular/cdk/portal';
 import {ItunesAlbumComponent} from './music/media/adapter/itunes-adapter/adapter/itunes-album/itunes-album.component';
 import {DeezerAlbumComponent} from './music/media/adapter/deezer-adapter/adapter/deezer-album/deezer-album.component';
 import { BaseAdapterComponent } from './music/media/adapter/base-adapter/base-adapter.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { BaseAdapterComponent } from './music/media/adapter/base-adapter/base-ad
   imports: [
     CommonModule,
     MusicRoutingModule,
-    PortalModule
+    PortalModule,
+    MatCardModule
   ],
   providers: [
     DeezerDataService,

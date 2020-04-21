@@ -1,1 +1,5 @@
-<app-media *ngFor="let media of medias" [media]="media"></app-media>
+<section>
+  <mat-card *ngFor="let media of medias">
+    <app-media [media]="media"></app-media>
+  </mat-card>
+</section>

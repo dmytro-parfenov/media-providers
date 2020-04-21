@@ -4,15 +4,18 @@ main {
   grid-template-rows: 1fr auto;
 }
 
-a {
-  display: block;
-}
-
-.logo {
-  width: 100%;
+footer {
+  display: flex;
+  justify-content: center;
 }
 
 img {
-  max-height: 24px;
   max-width: 100%;
+  width: 100px;
+
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }

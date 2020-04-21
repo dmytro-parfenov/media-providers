@@ -9,7 +9,7 @@ import {ItunesAlbumComponent} from './adapter/itunes-album/itunes-album.componen
 @Injectable({
   providedIn: 'root'
 })
-export class ItunesAdapterFactoryService extends AdapterFactory {
+export class ItunesAdapterFactoryService extends AdapterFactory<ItunesContext> {
 
   constructor(private readonly injector: Injector) {
     super();

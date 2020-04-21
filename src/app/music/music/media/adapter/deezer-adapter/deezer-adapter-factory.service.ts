@@ -9,7 +9,7 @@ import {DeezerAlbumComponent} from './adapter/deezer-album/deezer-album.componen
 @Injectable({
   providedIn: 'root'
 })
-export class DeezerAdapterFactoryService extends AdapterFactory {
+export class DeezerAdapterFactoryService extends AdapterFactory<DeezerContext> {
 
   constructor(private readonly injector: Injector) {
     super();

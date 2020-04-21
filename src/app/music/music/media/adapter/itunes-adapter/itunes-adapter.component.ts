@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit, Optional} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Optional} from '@angular/core';
 import {AdapterRef} from '../../shared/adapter-ref';
 import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
 import {ItunesAdapterFactoryService} from './itunes-adapter-factory.service';
-import {ComponentPortal} from '@angular/cdk/portal';
-import {AdapterEmitter} from '../../shared/adapter-emitter';
+import {BaseAdapterComponent} from '../base-adapter/base-adapter.component';
 
 @Component({
   selector: 'app-itunes-adapter',
@@ -11,27 +10,11 @@ import {AdapterEmitter} from '../../shared/adapter-emitter';
   styleUrls: ['./itunes-adapter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItunesAdapterComponent implements OnInit {
-
-  portal: ComponentPortal<any>;
-
-  emitter: AdapterEmitter = (data) => {
-    if (!this.adapterRef) {
-      return;
-    }
-
-    this.adapterRef.emit(data);
-  }
+export class ItunesAdapterComponent extends BaseAdapterComponent {
 
   constructor(private readonly itunesAdapterFactoryService: ItunesAdapterFactoryService,
-              @Optional() private readonly adapterRef: AdapterRef<ItunesContext>) { }
-
-  ngOnInit() {
-    if (!this.adapterRef) {
-      return;
-    }
-
-    this.portal = this.itunesAdapterFactoryService.resolvePortal(this.adapterRef.context, this.emitter);
+              @Optional() private readonly adapterRef: AdapterRef<ItunesContext>) {
+    super(itunesAdapterFactoryService, adapterRef);
   }
 
 }

@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit, Optional} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Optional} from '@angular/core';
 import {AdapterRef} from '../../shared/adapter-ref';
 import {DeezerContext} from '../../../shared/provider/deezer/deezer-context';
 import {DeezerAdapterFactoryService} from './deezer-adapter-factory.service';
-import {ComponentPortal} from '@angular/cdk/portal';
-import {AdapterEmitter} from '../../shared/adapter-emitter';
+import {BaseAdapterComponent} from '../base-adapter/base-adapter.component';
 
 @Component({
   selector: 'app-deezer-adapter',
@@ -11,27 +10,11 @@ import {AdapterEmitter} from '../../shared/adapter-emitter';
   styleUrls: ['./deezer-adapter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DeezerAdapterComponent implements OnInit {
-
-  portal: ComponentPortal<any>;
-
-  emitter: AdapterEmitter = (data) => {
-    if (!this.adapterRef) {
-      return;
-    }
-
-    this.adapterRef.emit(data);
-  }
+export class DeezerAdapterComponent extends BaseAdapterComponent {
 
   constructor(private readonly deezerAdapterFactoryService: DeezerAdapterFactoryService,
-              @Optional() private readonly adapterRef: AdapterRef<DeezerContext>) { }
-
-  ngOnInit() {
-    if (!this.adapterRef) {
-      return;
-    }
-
-    this.portal = this.deezerAdapterFactoryService.resolvePortal(this.adapterRef.context, this.emitter);
+              @Optional() private readonly adapterRef: AdapterRef<DeezerContext>) {
+    super(deezerAdapterFactoryService, adapterRef);
   }
 
 }

@@ -8,13 +8,14 @@ import {SearchParams} from './search-params';
 import {Media} from './shared/media/media';
 import {MediaAdapterFactoryService} from './media/media-adapter-factory.service';
 import {ItunesAdapterFactoryService} from './media/adapter/itunes-adapter/itunes-adapter-factory.service';
+import {DeezerAdapterFactoryService} from './media/adapter/deezer-adapter/deezer-adapter-factory.service';
 
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [MediaAdapterFactoryService, ItunesAdapterFactoryService]
+  providers: [MediaAdapterFactoryService, ItunesAdapterFactoryService, DeezerAdapterFactoryService]
 })
 export class MusicComponent implements OnInit {
 

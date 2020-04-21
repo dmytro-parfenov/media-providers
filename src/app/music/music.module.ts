@@ -14,11 +14,19 @@ import {MediaComponent} from './music/media/media.component';
 import {ItunesAdapterComponent} from './music/media/adapter/itunes-adapter/itunes-adapter.component';
 import {DeezerAdapterComponent} from './music/media/adapter/deezer-adapter/deezer-adapter.component';
 import {PortalModule} from '@angular/cdk/portal';
-import { ItunesAlbumComponent } from './music/media/adapter/itunes-adapter/adapter/itunes-album/itunes-album.component';
+import {ItunesAlbumComponent} from './music/media/adapter/itunes-adapter/adapter/itunes-album/itunes-album.component';
+import {DeezerAlbumComponent} from './music/media/adapter/deezer-adapter/adapter/deezer-album/deezer-album.component';
 
 
 @NgModule({
-  declarations: [MusicComponent, MediaComponent, ItunesAdapterComponent, DeezerAdapterComponent, ItunesAlbumComponent],
+  declarations: [
+    MusicComponent,
+    MediaComponent,
+    ItunesAdapterComponent,
+    DeezerAdapterComponent,
+    ItunesAlbumComponent,
+    DeezerAlbumComponent
+  ],
   imports: [
     CommonModule,
     MusicRoutingModule,

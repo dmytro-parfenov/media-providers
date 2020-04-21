@@ -10,10 +10,14 @@ import {DeezerAlbum} from '../../../../../../shared/api/deezer/deezer-album';
 })
 export class DeezerAlbumComponent {
 
-  get title() {
-    return this.adapterRef && this.adapterRef.context.title;
-  }
+  album: DeezerAlbum;
 
-  constructor(@Optional() private readonly adapterRef: AdapterRef<DeezerAlbum>) { }
+  constructor(@Optional() private readonly adapterRef: AdapterRef<DeezerAlbum>) {
+    if (!adapterRef) {
+      return;
+    }
+
+    this.album = adapterRef.context;
+  }
 
 }

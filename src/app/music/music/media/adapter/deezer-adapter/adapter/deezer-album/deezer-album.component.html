@@ -1,2 +1,19 @@
-{{title}}
-<br>
+<main *ngIf="album">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img [src]="album.artist.picture_medium" alt="artist" class="artist-avatar">
+    </div>
+    <mat-card-title>{{album.title}}</mat-card-title>
+    <mat-card-subtitle>{{album.artist.name}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions class="actions">
+    <a mat-raised-button [href]="album.link" target="_blank">Album</a>
+    <a mat-raised-button [href]="album.artist.link" target="_blank">Artist</a>
+  </mat-card-actions>
+
+  <mat-card-content class="content">
+    <mat-card-subtitle>Tracks: {{album.nb_tracks}}</mat-card-subtitle>
+    <img [src]="album.cover_medium" alt="cover" class="cover">
+  </mat-card-content>
+</main>

@@ -1,6 +1,15 @@
 @import 'utils';
 
-section {
+nav {
+  padding: 16px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.results {
   padding: 16px;
   display: grid;
   grid-gap: 16px;

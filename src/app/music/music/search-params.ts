@@ -1,3 +1,4 @@
-export interface SearchParams {
-  artist: string;
+export class SearchParams {
+  constructor(public artist = '') {
+  }
 }

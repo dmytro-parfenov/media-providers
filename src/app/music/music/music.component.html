@@ -1,4 +1,12 @@
-<section>
+<nav>
+  <app-filter [searchParams]="searchParams" (searchParamsChange)="onSearchParamsChange($event)"></app-filter>
+</nav>
+
+<section class="loading" *ngIf="isLoading">
+  <mat-spinner [diameter]="60"></mat-spinner>
+</section>
+
+<section class="results">
   <mat-card *ngFor="let media of medias">
     <app-media [media]="media"></app-media>
   </mat-card>

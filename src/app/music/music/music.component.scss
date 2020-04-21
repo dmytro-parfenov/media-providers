@@ -10,6 +10,10 @@ section {
   }
 
   @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(3, auto);
+  }
+
+  @include media-breakpoint-up(xl) {
     grid-template-columns: repeat(4, auto);
   }
 }

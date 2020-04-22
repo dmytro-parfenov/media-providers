@@ -1,4 +1,4 @@
 export class SearchParams {
-  constructor(public query = '') {
+  constructor(public query = '', public uniq = true) {
   }
 }

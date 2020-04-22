@@ -44,14 +44,21 @@ export class SearchComponent implements OnInit {
   }
 
   apply() {
-    this.searchParamsChange.emit(new SearchParams(this.form.get('query').value));
+    const searchParams = new SearchParams(
+      this.form.get('query').value,
+      this.form.get('uniq').value
+    );
+
+    this.searchParamsChange.emit(searchParams);
   }
 
   private createForm(searchParams?: SearchParams) {
     const query = searchParams ? searchParams.query : '';
+    const uniq = searchParams ? searchParams.uniq : true;
 
     this.form = this.formBuilder.group({
-      query: [query]
+      query: [query],
+      uniq: [uniq]
     });
   }
 

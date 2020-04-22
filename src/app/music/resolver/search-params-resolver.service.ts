@@ -12,8 +12,9 @@ export class SearchParamsResolverService implements Resolve<SearchParams> {
 
   resolve({queryParamMap}: ActivatedRouteSnapshot): Observable<SearchParams> | Promise<SearchParams> | SearchParams {
     const query = queryParamMap.get('query');
+    const uniq = queryParamMap.get('uniq') !== 'false';
 
-    return new SearchParams(query);
+    return new SearchParams(query, uniq);
   }
 
 }

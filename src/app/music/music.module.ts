@@ -30,6 +30,7 @@ import {SearchResultsComponent} from './music/search/search-results/search-resul
 // tslint:disable-next-line
 import {DeezerAlbumTracksComponent} from './music/media/adapter/deezer-adapter/adapter/deezer-album/deezer-album-tracks/deezer-album-tracks.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatFormFieldModule,
     MatInputModule,
     MatBadgeModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatCheckboxModule
   ],
   providers: [
     DeezerDataService,

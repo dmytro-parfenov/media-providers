@@ -7,6 +7,13 @@
   </div>
 
   <mat-form-field>
+    <mat-label>Entity</mat-label>
+    <mat-select formControlName="entity">
+      <mat-option *ngFor="let entity of entities" [value]="entity">{{entity}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
     <mat-label>Providers</mat-label>
     <mat-select formControlName="providers" multiple>
       <mat-select-trigger>
@@ -15,7 +22,7 @@
         (+{{form.get('providers').value?.length - 1}} {{form.get('providers').value?.length === 2 ? 'other' : 'others'}})
       </span>
       </mat-select-trigger>
-      <mat-option *ngFor="let provider of getAvailableProviders()" [value]="provider">{{provider}}</mat-option>
+      <mat-option *ngFor="let provider of serviceProviders" [value]="provider.type">{{provider.type}}</mat-option>
     </mat-select>
   </mat-form-field>
 

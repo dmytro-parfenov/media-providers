@@ -14,10 +14,12 @@ import {SearchParams} from '../search-params';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SERVICE_PROVIDER} from '../service-provider';
 import {Provider} from '../shared/provider/provider';
-import {ServiceProvider} from '../../shared/service-provider.enum';
+import {ServiceProviderType} from '../../shared/service-provider-type.enum';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {Subject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
+import {ProviderContextType} from '../shared/provider/provider-context-type.enum';
+import {first, uniq} from 'lodash-es';
 
 @Component({
   selector: 'app-search',
@@ -37,7 +39,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   results: string | null = null;
 
-  private availableProviders: ServiceProvider[] = [];
+  entities: ProviderContextType[] = [];
+
+  get serviceProviders() {
+    return this.providers || [];
+  }
 
   private formReload$ = new Subject();
 
@@ -77,55 +83,99 @@ export class SearchComponent implements OnInit, OnDestroy {
     const searchParams = new SearchParams(
       this.form.get('query').value,
       this.form.get('uniq').value,
-      this.form.get('providers').value
+      this.form.get('providers').value,
+      this.form.get('entity').value
     );
 
     this.searchParamsChange.emit(searchParams);
-  }
-
-  getAvailableProviders() {
-    if (!this.providers) {
-      return [];
-    }
-
-    if (this.availableProviders.length) {
-      return  this.availableProviders;
-    }
-
-    this.availableProviders = this.providers.map(provider => provider.type);
-
-    return this.availableProviders;
   }
 
   private reloadForm(searchParams?: SearchParams) {
     this.formReload$.next();
 
     const query = searchParams ? searchParams.query : '';
-    const uniq = (searchParams && isNotNullOrUndefined(searchParams.uniq)) ? searchParams.uniq : true;
-    const providers = (searchParams && searchParams.providers.length) ? searchParams.providers : this.getAvailableProviders();
 
-    this.form = this.formBuilder.group({
-      query: [query],
-      uniq: [{value: uniq, disabled: providers.length < 2}],
-      providers: [providers]
-    });
+    const unique = (searchParams && isNotNullOrUndefined(searchParams.uniq)) ? searchParams.uniq : true;
+
+    const providers = (searchParams && searchParams.providers.length) ?
+      searchParams.providers :
+      this.serviceProviders.map(provider => provider.type);
+
+    this.updateEntities(providers);
+    const entity = (searchParams && searchParams.entity && this.isEntityAvailable(searchParams.entity)) ?
+      searchParams.entity :
+      first(this.entities);
+
+    if (this.form) {
+      this.form.get('query').setValue(query);
+      this.form.get('uniq').setValue(uniq);
+      this.form.get('providers').setValue(providers);
+      this.form.get('entity').setValue(entity);
+    } else {
+      this.form = this.formBuilder.group({
+        query: [query],
+        uniq: [unique],
+        providers: [providers],
+        entity: [entity]
+      });
+    }
+
+    this.updateFormUniqStatus(providers);
 
     this.initiateFormListeners();
   }
 
   private initiateFormListeners() {
     this.form.get('providers').valueChanges.pipe(
-      tap((providers: ServiceProvider[]) => {
-        if (providers.length > 1) {
-          this.form.get('uniq').enable();
-          return;
+      tap((providers: ServiceProviderType[]) => {
+        this.updateEntities(providers);
+
+        if (!this.isEntityAvailable(this.form.get('entity').value)) {
+          this.form.get('entity').setValue(first(this.entities));
         }
 
-        this.form.get('uniq').disable();
+        this.updateFormUniqStatus(providers);
       }),
       takeUntil(this.formReload$),
       takeUntil(this.destroy$)
     ).subscribe();
+  }
+
+  private updateFormUniqStatus(basedOnpProviders: ServiceProviderType[]) {
+    if (!this.form) {
+      return;
+    }
+
+    if (this.isUniqAvailableForProviderTypes(basedOnpProviders)) {
+      this.form.get('uniq').enable();
+      return;
+    }
+
+    this.form.get('uniq').disable();
+  }
+
+  private updateEntities(fromProviderTypes: ServiceProviderType[] = []) {
+    const entities = this.serviceProviders.reduce<ProviderContextType[]>((previousValue, currentValue) => {
+        const currentEntities = currentValue.entities;
+
+        if (!fromProviderTypes.length) {
+          return previousValue.concat(currentEntities);
+        }
+
+        return previousValue.concat(fromProviderTypes.includes(currentValue.type) ? currentEntities : []);
+      },
+      []
+    );
+
+    this.entities = uniq(entities);
+  }
+
+  private isEntityAvailable(entity: ProviderContextType) {
+    return this.entities.includes(entity);
+  }
+
+  private isUniqAvailableForProviderTypes(providerTypes: ServiceProviderType[]) {
+    return providerTypes.length !== 1;
   }
 
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Media} from './shared/media/media';
 import {MediaFactory} from './media-factory';
-import {ServiceProvider} from '../shared/service-provider.enum';
+import {ServiceProviderType} from '../shared/service-provider-type.enum';
 import {DeezerFactory} from './factory/deezer/deezer-factory';
 import {ItunesFactory} from './factory/itunes/itunes-factory';
 
@@ -14,9 +14,9 @@ export class MediaFactoryService {
 
   create(media: Media): MediaFactory {
     switch (media.type) {
-      case ServiceProvider.iTunes:
+      case ServiceProviderType.iTunes:
         return new ItunesFactory();
-      case ServiceProvider.Deezer:
+      case ServiceProviderType.Deezer:
         return new DeezerFactory();
     }
 

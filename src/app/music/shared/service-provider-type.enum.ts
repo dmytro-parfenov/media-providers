@@ -1,4 +1,4 @@
-export enum ServiceProvider {
+export enum ServiceProviderType {
   Deezer = 'Deezer',
   iTunes = 'iTunes'
 }

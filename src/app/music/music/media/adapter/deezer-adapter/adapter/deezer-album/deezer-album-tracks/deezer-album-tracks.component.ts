@@ -10,6 +10,6 @@ import {DeezerAlbumTracksData} from './deezer-album-tracks-data';
 })
 export class DeezerAlbumTracksComponent {
 
-  constructor(@Optional() @Inject(MAT_BOTTOM_SHEET_DATA) private readonly data: DeezerAlbumTracksData) { }
+  constructor(@Optional() @Inject(MAT_BOTTOM_SHEET_DATA) readonly data: DeezerAlbumTracksData) { }
 
 }

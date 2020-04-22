@@ -11,7 +11,7 @@ import {ItunesAdapterFactoryService} from './media/adapter/itunes-adapter/itunes
 import {DeezerAdapterFactoryService} from './media/adapter/deezer-adapter/deezer-adapter-factory.service';
 import {of} from 'rxjs';
 import {MediaFactoryService} from './media-factory.service';
-import {uniqBy} from 'lodash-es';
+import {MediasUtilsService} from './medias-utils.service';
 
 @Component({
   selector: 'app-music',
@@ -22,7 +22,8 @@ import {uniqBy} from 'lodash-es';
     MediaAdapterFactoryService,
     ItunesAdapterFactoryService,
     DeezerAdapterFactoryService,
-    MediaFactoryService
+    MediaFactoryService,
+    MediasUtilsService
   ]
 })
 export class MusicComponent implements OnInit {
@@ -37,7 +38,7 @@ export class MusicComponent implements OnInit {
               private readonly searchParamsService: SearchParamsService,
               private readonly searchService: SearchService,
               private readonly changeDetectorRef: ChangeDetectorRef,
-              private readonly mediaFactoryService: MediaFactoryService) { }
+              private readonly mediasUtilsService: MediasUtilsService) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(this.onRouterDataChange.bind(this));
@@ -61,7 +62,7 @@ export class MusicComponent implements OnInit {
 
     this.searchService.do(params).pipe(
       tap(medias => {
-        this.medias = this.applySearchParams(medias, params);
+        this.medias = this.mediasUtilsService.applySearchParams(medias, params);
         this.changeDetectorRef.markForCheck();
       }),
       catchError(() => {
@@ -73,19 +74,6 @@ export class MusicComponent implements OnInit {
         this.changeDetectorRef.markForCheck();
       })
     ).subscribe();
-  }
-
-  private applySearchParams(medias: Media[], params: SearchParams) {
-    if (!params.uniq) {
-      return medias;
-    }
-
-    return uniqBy(medias, media => {
-      const mediaFactory = this.mediaFactoryService.create(media);
-      const mediaContextManager = mediaFactory.create(media.context);
-
-      return mediaContextManager.getName(media.context);
-    });
   }
 
 }

@@ -1,0 +1,14 @@
+<main *ngIf="data">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img [src]="data.cover" alt="cover" class="cover">
+    </div>
+    <mat-card-title>{{data.title}}</mat-card-title>
+    <mat-card-subtitle>{{data.artist}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div *ngFor="let track of data.tracks" class="track">
+    <mat-card-subtitle>{{track.title}}</mat-card-subtitle>
+    <audio [src]="track.preview" controls></audio>
+  </div>
+</main>

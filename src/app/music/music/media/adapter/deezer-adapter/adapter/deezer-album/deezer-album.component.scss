@@ -23,18 +23,15 @@ a {
   align-items: center;
 }
 
-.toggle-tracks {
+.preview {
   margin-bottom: 16px;
-}
+  padding-bottom: 30px;
+  position: relative;
 
-.tracks {
-  margin-bottom: 16px;
-}
-
-audio {
-  max-width: 100%;
-}
-
-.spinner {
-  margin-bottom: 16px;
+  .spinner {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

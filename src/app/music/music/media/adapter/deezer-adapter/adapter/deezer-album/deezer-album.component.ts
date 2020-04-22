@@ -6,6 +6,9 @@ import {catchError, finalize, map, tap} from 'rxjs/operators';
 import {DeezerResult} from '../../../../../../shared/api/deezer/deezer-result';
 import {DeezerTrack} from '../../../../../../shared/api/deezer/deezer-track';
 import {of} from 'rxjs';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {DeezerAlbumTracksComponent} from './deezer-album-tracks/deezer-album-tracks.component';
+import {DeezerAlbumTracksData} from './deezer-album-tracks/deezer-album-tracks-data';
 
 @Component({
   selector: 'app-deezer-album',
@@ -19,14 +22,9 @@ export class DeezerAlbumComponent {
 
   areTracksLoading = false;
 
-  tracks: DeezerTrack[] = [];
-
-  get hasTracks() {
-    return this.tracks.length > 0;
-  }
-
   constructor(private readonly deezerDataService: DeezerDataService,
               private readonly changeDetectorRef: ChangeDetectorRef,
+              private readonly bottomSheet: MatBottomSheet,
               @Optional() private readonly adapterRef: AdapterRef<DeezerAlbum>) {
     if (!adapterRef) {
       return;
@@ -41,8 +39,12 @@ export class DeezerAlbumComponent {
     this.deezerDataService.getAlbumTracks(this.album.id).pipe(
       map<DeezerResult, DeezerTrack[]>(response => response.data),
       tap(tracks => {
-        this.tracks = tracks;
-        this.changeDetectorRef.markForCheck();
+        this.bottomSheet.open<DeezerAlbumTracksComponent, DeezerAlbumTracksData>(DeezerAlbumTracksComponent,
+          {data: {
+              cover: this.album.cover_medium,
+              title: this.album.title,
+              artist: this.album.artist.name,
+              tracks}});
       }),
       catchError(() => {
         console.error(`Unable to get track list for the ${this.album.title} album`);
@@ -53,11 +55,6 @@ export class DeezerAlbumComponent {
         this.changeDetectorRef.markForCheck();
       })
     ).subscribe();
-  }
-
-  hideTracks() {
-    this.tracks = [];
-    this.changeDetectorRef.markForCheck();
   }
 
 }

@@ -26,7 +26,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatBadgeModule} from '@angular/material/badge';
-import { SearchResultsComponent } from './music/search/search-results/search-results.component';
+import {SearchResultsComponent} from './music/search/search-results/search-results.component';
+// tslint:disable-next-line
+import {DeezerAlbumTracksComponent} from './music/media/adapter/deezer-adapter/adapter/deezer-album/deezer-album-tracks/deezer-album-tracks.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 
 @NgModule({
@@ -39,21 +42,23 @@ import { SearchResultsComponent } from './music/search/search-results/search-res
     DeezerAlbumComponent,
     BaseAdapterComponent,
     SearchComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    DeezerAlbumTracksComponent
   ],
-    imports: [
-        CommonModule,
-        MusicRoutingModule,
-        PortalModule,
-        MatCardModule,
-        MatButtonModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatBadgeModule
-    ],
+  imports: [
+    CommonModule,
+    MusicRoutingModule,
+    PortalModule,
+    MatCardModule,
+    MatButtonModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatBadgeModule,
+    MatBottomSheetModule
+  ],
   providers: [
     DeezerDataService,
     ItunesDataService,

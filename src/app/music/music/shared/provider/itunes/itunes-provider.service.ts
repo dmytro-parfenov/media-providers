@@ -18,12 +18,12 @@ export class ItunesProviderService implements Provider<ItunesContext> {
 
   constructor(private readonly itunesDataService: ItunesDataService) { }
 
-  search({artist}: SearchParams) {
-    if (!artist) {
+  search({query}: SearchParams) {
+    if (!query) {
       return of<ItunesContext[]>([]);
     }
 
-    return this.itunesDataService.search(artist).pipe(
+    return this.itunesDataService.search(query).pipe(
       map<ItunesResult, ItunesContext[]>(response =>
         response.results.map<ItunesContext>(data => ({type: ProviderContextType.Album, data}))),
       catchError(error => {

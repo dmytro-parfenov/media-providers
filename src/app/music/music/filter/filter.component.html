@@ -1,9 +1,0 @@
-<form [formGroup]="form" (ngSubmit)="apply()">
-  <mat-form-field >
-    <mat-label>Artist</mat-label>
-    <input matInput formControlName="artist" aria-label="artist">
-  </mat-form-field>
-
-  <button mat-raised-button type="submit" color="primary">Apply</button>
-  <button mat-raised-button (click)="reset()">Reset</button>
-</form>

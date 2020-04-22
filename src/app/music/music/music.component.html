@@ -1,5 +1,7 @@
 <nav>
-  <app-filter [searchParams]="searchParams" (searchParamsChange)="onSearchParamsChange($event)"></app-filter>
+  <app-search [searchParams]="searchParams" (searchParamsChange)="onSearchParamsChange($event)">
+    <app-search-results [length]="medias.length"></app-search-results>
+  </app-search>
 </nav>
 
 <section class="loading" *ngIf="isLoading">

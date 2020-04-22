@@ -1,4 +1,4 @@
 export class SearchParams {
-  constructor(public artist = '') {
+  constructor(public query = '') {
   }
 }

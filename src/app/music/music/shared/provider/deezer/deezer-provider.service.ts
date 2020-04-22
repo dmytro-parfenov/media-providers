@@ -18,12 +18,12 @@ export class DeezerProviderService implements Provider<DeezerContext> {
 
   constructor(private readonly deezerDataService: DeezerDataService) { }
 
-  search({artist}: SearchParams) {
-    if (!artist) {
+  search({query}: SearchParams) {
+    if (!query) {
       return of<DeezerContext[]>([]);
     }
 
-    return this.deezerDataService.searchAlbum(artist).pipe(
+    return this.deezerDataService.searchAlbum(query).pipe(
       map<DeezerResult, DeezerContext[]>(response =>
         response.data.map<DeezerContext>(data => ({type: ProviderContextType.Album, data}))),
       catchError(error => {

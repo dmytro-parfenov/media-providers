@@ -11,8 +11,9 @@ export class SearchParamsResolverService implements Resolve<SearchParams> {
   constructor() { }
 
   resolve({queryParamMap}: ActivatedRouteSnapshot): Observable<SearchParams> | Promise<SearchParams> | SearchParams {
-    const artist = queryParamMap.get('artist') || '';
-    return new SearchParams(artist);
+    const query = queryParamMap.get('query');
+
+    return new SearchParams(query);
   }
 
 }

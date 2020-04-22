@@ -21,10 +21,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {FilterComponent} from './music/filter/filter.component';
+import {SearchComponent} from './music/search/search.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatBadgeModule} from '@angular/material/badge';
+import { SearchResultsComponent } from './music/search/search-results/search-results.component';
 
 
 @NgModule({
@@ -36,20 +38,22 @@ import {MatInputModule} from '@angular/material/input';
     ItunesAlbumComponent,
     DeezerAlbumComponent,
     BaseAdapterComponent,
-    FilterComponent
+    SearchComponent,
+    SearchResultsComponent
   ],
-  imports: [
-    CommonModule,
-    MusicRoutingModule,
-    PortalModule,
-    MatCardModule,
-    MatButtonModule,
-    MatListModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
+    imports: [
+        CommonModule,
+        MusicRoutingModule,
+        PortalModule,
+        MatCardModule,
+        MatButtonModule,
+        MatListModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatBadgeModule
+    ],
   providers: [
     DeezerDataService,
     ItunesDataService,

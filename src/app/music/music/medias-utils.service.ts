@@ -12,15 +12,15 @@ export class MediasUtilsService {
   constructor(private readonly mediaFactoryService: MediaFactoryService) { }
 
   applySearchParams(medias: Media[], params: SearchParams) {
-    if (!params.uniq) {
-      return medias;
+    if (params.uniq && params.providers.length > 1) {
+      return uniqBy(medias, media => {
+        const mediaFactory = this.mediaFactoryService.create(media);
+        const mediaContextManager = mediaFactory.create(media.context);
+
+        return mediaContextManager.getName(media.context);
+      });
     }
 
-    return uniqBy(medias, media => {
-      const mediaFactory = this.mediaFactoryService.create(media);
-      const mediaContextManager = mediaFactory.create(media.context);
-
-      return mediaContextManager.getName(media.context);
-    });
+    return medias;
   }
 }

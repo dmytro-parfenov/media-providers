@@ -1,10 +1,23 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output
+} from '@angular/core';
 import {SearchParams} from '../search-params';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SERVICE_PROVIDER} from '../service-provider';
 import {Provider} from '../shared/provider/provider';
 import {ServiceProvider} from '../../shared/service-provider.enum';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {Subject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -12,10 +25,10 @@ import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   @Input() set searchParams(searchParams: SearchParams) {
-    this.createForm(searchParams);
+    this.reloadForm(searchParams);
   }
 
   @Output() searchParamsChange = new EventEmitter<SearchParams>();
@@ -26,6 +39,10 @@ export class SearchComponent implements OnInit {
 
   private availableProviders: ServiceProvider[] = [];
 
+  private formReload$ = new Subject();
+
+  private destroy$ = new Subject();
+
   constructor(private readonly formBuilder: FormBuilder,
               private readonly changeDetectorRef: ChangeDetectorRef,
               @Optional() @Inject(SERVICE_PROVIDER) private readonly providers: Provider[]) { }
@@ -35,10 +52,16 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.createForm();
+    this.reloadForm();
   }
 
-  setResults(results: number) {
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.formReload$.complete();
+  }
+
+  updateResults(results: number) {
     this.results = results ? results.toString(10) : null;
     this.changeDetectorRef.markForCheck();
   }
@@ -60,19 +83,7 @@ export class SearchComponent implements OnInit {
     this.searchParamsChange.emit(searchParams);
   }
 
-  private createForm(searchParams?: SearchParams) {
-    const query = searchParams ? searchParams.query : '';
-    const uniq = (searchParams && isNotNullOrUndefined(searchParams.uniq)) ? searchParams.uniq : true;
-    const providers = (searchParams && searchParams.providers.length) ? searchParams.providers : this.getAvailableProviders();
-
-    this.form = this.formBuilder.group({
-      query: [query],
-      uniq: [uniq],
-      providers: [providers]
-    });
-  }
-
-  private getAvailableProviders() {
+  getAvailableProviders() {
     if (!this.providers) {
       return [];
     }
@@ -84,6 +95,37 @@ export class SearchComponent implements OnInit {
     this.availableProviders = this.providers.map(provider => provider.type);
 
     return this.availableProviders;
+  }
+
+  private reloadForm(searchParams?: SearchParams) {
+    this.formReload$.next();
+
+    const query = searchParams ? searchParams.query : '';
+    const uniq = (searchParams && isNotNullOrUndefined(searchParams.uniq)) ? searchParams.uniq : true;
+    const providers = (searchParams && searchParams.providers.length) ? searchParams.providers : this.getAvailableProviders();
+
+    this.form = this.formBuilder.group({
+      query: [query],
+      uniq: [{value: uniq, disabled: providers.length < 2}],
+      providers: [providers]
+    });
+
+    this.initiateFormListeners();
+  }
+
+  private initiateFormListeners() {
+    this.form.get('providers').valueChanges.pipe(
+      tap((providers: ServiceProvider[]) => {
+        if (providers.length > 1) {
+          this.form.get('uniq').enable();
+          return;
+        }
+
+        this.form.get('uniq').disable();
+      }),
+      takeUntil(this.formReload$),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 
 }

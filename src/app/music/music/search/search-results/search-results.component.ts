@@ -14,7 +14,7 @@ export class SearchResultsComponent implements OnDestroy {
       return;
     }
 
-    this.filterComponent.setResults(length);
+    this.filterComponent.updateResults(length);
   }
 
   constructor(@Optional() private readonly filterComponent: SearchComponent) { }
@@ -24,7 +24,7 @@ export class SearchResultsComponent implements OnDestroy {
       return;
     }
 
-    this.filterComponent.setResults(0);
+    this.filterComponent.updateResults(0);
   }
 
 }

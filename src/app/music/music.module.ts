@@ -31,6 +31,7 @@ import {SearchResultsComponent} from './music/search/search-results/search-resul
 import {DeezerAlbumTracksComponent} from './music/media/adapter/deezer-adapter/adapter/deezer-album/deezer-album-tracks/deezer-album-tracks.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -46,21 +47,22 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     SearchResultsComponent,
     DeezerAlbumTracksComponent
   ],
-  imports: [
-    CommonModule,
-    MusicRoutingModule,
-    PortalModule,
-    MatCardModule,
-    MatButtonModule,
-    MatListModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        CommonModule,
+        MusicRoutingModule,
+        PortalModule,
+        MatCardModule,
+        MatButtonModule,
+        MatListModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatBadgeModule,
+        MatBottomSheetModule,
+        MatCheckboxModule,
+        MatSelectModule
+    ],
   providers: [
     DeezerDataService,
     ItunesDataService,

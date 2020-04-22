@@ -6,8 +6,21 @@
     </mat-form-field>
   </div>
 
+  <mat-form-field>
+    <mat-label>Providers</mat-label>
+    <mat-select formControlName="providers" multiple>
+      <mat-select-trigger>
+        {{form.get('providers').value?.length ? form.get('providers').value[0] : ''}}
+        <span *ngIf="form.get('providers').value?.length > 1" class="example-additional-selection">
+        (+{{form.get('providers').value?.length - 1}} {{form.get('providers').value?.length === 2 ? 'other' : 'others'}})
+      </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let provider of getAvailableProviders()" [value]="provider">{{provider}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-checkbox formControlName="uniq">Show only unique results</mat-checkbox>
 
   <button mat-raised-button type="submit" color="primary">Apply</button>
-  <button mat-raised-button (click)="reset()">Reset</button>
+  <button mat-raised-button type="button" (click)="reset()">Reset</button>
 </form>

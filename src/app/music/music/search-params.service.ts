@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Params, Router} from '@angular/router';
 import {SearchParams} from './search-params';
+import {isArray} from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class SearchParamsService {
   }
 
   private isValidParamValue(value: any) {
-    return value !== null && value !== undefined && value !== '';
+    if (isArray(value)) {
+      return value.length > 0;
+    }
+
+    return (value !== null && value !== undefined && value !== '');
   }
 }

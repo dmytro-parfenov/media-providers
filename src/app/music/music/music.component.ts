@@ -10,13 +10,20 @@ import {MediaAdapterFactoryService} from './media/media-adapter-factory.service'
 import {ItunesAdapterFactoryService} from './media/adapter/itunes-adapter/itunes-adapter-factory.service';
 import {DeezerAdapterFactoryService} from './media/adapter/deezer-adapter/deezer-adapter-factory.service';
 import {of} from 'rxjs';
+import {MediaFactoryService} from './media-factory.service';
+import {uniqBy} from 'lodash-es';
 
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [MediaAdapterFactoryService, ItunesAdapterFactoryService, DeezerAdapterFactoryService]
+  providers: [
+    MediaAdapterFactoryService,
+    ItunesAdapterFactoryService,
+    DeezerAdapterFactoryService,
+    MediaFactoryService
+  ]
 })
 export class MusicComponent implements OnInit {
 
@@ -29,7 +36,8 @@ export class MusicComponent implements OnInit {
   constructor(private readonly activatedRoute: ActivatedRoute,
               private readonly searchParamsService: SearchParamsService,
               private readonly searchService: SearchService,
-              private readonly changeDetectorRef: ChangeDetectorRef) { }
+              private readonly changeDetectorRef: ChangeDetectorRef,
+              private readonly mediaFactoryService: MediaFactoryService) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(this.onRouterDataChange.bind(this));
@@ -53,7 +61,7 @@ export class MusicComponent implements OnInit {
 
     this.searchService.do(params).pipe(
       tap(medias => {
-        this.medias = medias;
+        this.medias = this.applySearchParams(medias, params);
         this.changeDetectorRef.markForCheck();
       }),
       catchError(() => {
@@ -65,6 +73,19 @@ export class MusicComponent implements OnInit {
         this.changeDetectorRef.markForCheck();
       })
     ).subscribe();
+  }
+
+  private applySearchParams(medias: Media[], params: SearchParams) {
+    if (!params.uniq) {
+      return medias;
+    }
+
+    return uniqBy(medias, media => {
+      const mediaFactory = this.mediaFactoryService.create(media);
+      const mediaContextManager = mediaFactory.create(media.context);
+
+      return mediaContextManager.getName(media.context);
+    });
   }
 
 }

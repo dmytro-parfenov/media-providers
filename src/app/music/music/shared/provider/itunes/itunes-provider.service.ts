@@ -7,11 +7,14 @@ import {ItunesResult} from '../../../../shared/api/itunes/itunes-result';
 import {SearchParams} from '../../../search-params';
 import {ItunesContext} from './itunes-context';
 import {ProviderContextType} from '../provider-context-type.enum';
+import {ServiceProvider} from '../../../../shared/service-provider.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItunesProviderService implements Provider<ItunesContext> {
+
+  type = ServiceProvider.iTunes;
 
   constructor(private readonly itunesDataService: ItunesDataService) { }
 

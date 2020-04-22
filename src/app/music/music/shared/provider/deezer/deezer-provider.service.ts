@@ -7,11 +7,14 @@ import {DeezerResult} from '../../../../shared/api/deezer/deezer-result';
 import {SearchParams} from '../../../search-params';
 import {DeezerContext} from './deezer-context';
 import {ProviderContextType} from '../provider-context-type.enum';
+import {ServiceProvider} from '../../../../shared/service-provider.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeezerProviderService implements Provider<DeezerContext> {
+
+  type = ServiceProvider.Deezer;
 
   constructor(private readonly deezerDataService: DeezerDataService) { }
 

@@ -5,9 +5,6 @@ import {Provider} from './shared/provider/provider';
 import {catchError, map} from 'rxjs/operators';
 import {Media} from './shared/media/media';
 import {SearchParams} from './search-params';
-import {ServiceProvider} from '../shared/service-provider.enum';
-import {ItunesProviderService} from './shared/provider/itunes/itunes-provider.service';
-import {DeezerProviderService} from './shared/provider/deezer/deezer-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +21,7 @@ export class SearchService {
 
     const requests$ = this.providers.reduce<Observable<Media[]>[]>((previousResults, provider) => {
         const searchResults$ = provider.search(params).pipe(
-          map<any[], Media[]>(results => results.map<Media>(result => ({type: this.resolveProviderType(provider), context: result}))),
+          map<any[], Media[]>(results => results.map<Media>(result => ({type: provider.type, context: result}))),
           catchError(() => of([]))
         );
         return previousResults.concat(searchResults$);
@@ -35,18 +32,5 @@ export class SearchService {
     return forkJoin<Observable<Media[]>[]>(requests$).pipe(
       map<Media[][], Media[]>(response => [].concat(...response))
     );
-  }
-
-  private resolveProviderType(provider: Provider): ServiceProvider {
-    if (provider instanceof DeezerProviderService) {
-      return ServiceProvider.Deezer;
-    }
-
-    if (provider instanceof ItunesProviderService) {
-      return ServiceProvider.iTunes;
-    }
-
-    console.error(`ServiceProvider type does not defined for:`, provider);
-    throw new Error();
   }
 }

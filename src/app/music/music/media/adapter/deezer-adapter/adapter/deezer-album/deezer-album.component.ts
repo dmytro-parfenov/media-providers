@@ -21,6 +21,10 @@ export class DeezerAlbumComponent {
 
   tracks: DeezerTrack[] = [];
 
+  get hasTracks() {
+    return this.tracks.length > 0;
+  }
+
   constructor(private readonly deezerDataService: DeezerDataService,
               private readonly changeDetectorRef: ChangeDetectorRef,
               @Optional() private readonly adapterRef: AdapterRef<DeezerAlbum>) {

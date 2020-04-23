@@ -4,6 +4,7 @@ import {SearchParams} from '../music/search-params';
 import {Observable} from 'rxjs';
 import {ServiceProviderType} from '../shared/service-provider-type.enum';
 import {ProviderContextType} from '../music/shared/provider/provider-context-type.enum';
+import {ProviderSortingType} from '../music/shared/provider/provider-sorting-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class SearchParamsResolverService implements Resolve<SearchParams> {
     const uniq = queryParamMap.get('uniq') === 'true';
     const providers = queryParamMap.getAll('providers') as ServiceProviderType[];
     const entity = queryParamMap.get('entity') as ProviderContextType;
+    const sortBy = queryParamMap.get('sortBy') as ProviderSortingType;
 
-    return new SearchParams(query, uniq, providers, entity);
+    return new SearchParams(query, uniq, providers, entity, sortBy);
   }
 
 }

@@ -9,7 +9,7 @@ export class ItunesFactory implements MediaFactory<ItunesContext> {
     switch (context.type) {
       case ItunesMusicEntityType.Album:
         return new ItunesAlbumManager();
-      case ItunesMusicEntityType.MusicTrack:
+      case ItunesMusicEntityType.Song:
         return new ItunesTrackManager();
     }
 

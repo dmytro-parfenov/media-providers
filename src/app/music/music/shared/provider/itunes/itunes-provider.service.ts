@@ -43,7 +43,7 @@ export class ItunesProviderService extends Provider<ItunesContext> {
   private resolveEntity(entity: ProviderContextType) {
     switch (entity) {
       case ProviderContextType.Track:
-        return ItunesMusicEntityType.MusicTrack;
+        return ItunesMusicEntityType.Song;
       case ProviderContextType.Album:
       case null:
         return ItunesMusicEntityType.Album;

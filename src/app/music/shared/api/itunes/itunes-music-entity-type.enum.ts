@@ -1,4 +1,4 @@
 export enum ItunesMusicEntityType {
   Album = 'album',
-  MusicTrack = 'musicTrack'
+  Song = 'song'
 }

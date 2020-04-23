@@ -22,7 +22,7 @@ export class ItunesAdapterFactoryService extends AdapterFactory<ItunesContext> {
     switch (context.type) {
       case ItunesMusicEntityType.Album:
         return this.createPortal(ItunesAlbumComponent, [provider], this.injector);
-      case ItunesMusicEntityType.MusicTrack:
+      case ItunesMusicEntityType.Song:
         return this.createPortal(ItunesTrackComponent, [provider], this.injector);
     }
 

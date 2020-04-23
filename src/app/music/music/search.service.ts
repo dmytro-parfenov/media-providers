@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {forkJoin, NEVER, Observable, of} from 'rxjs';
+import {forkJoin, Observable, of} from 'rxjs';
 import {SERVICE_PROVIDER} from './service-provider';
 import {Provider} from './shared/provider/provider';
 import {catchError, map} from 'rxjs/operators';
@@ -14,12 +14,12 @@ export class SearchService {
   constructor(@Optional() @Inject(SERVICE_PROVIDER) private readonly providers: Provider[]) {}
 
   do(params: SearchParams) {
-    if (!this.providers) {
-      console.error(`Service providers are not defined`);
-      return NEVER;
-    }
+    const providers = this.applySearchParamsToProviders(params, this.providers);
 
-    const providers = this.applySearchParamsToProviders(this.providers, params);
+    if (!providers.length) {
+      console.error(`Service providers are not defined`);
+      return of([]);
+    }
 
     const requests$ = providers.reduce<Observable<Media[]>[]>((previousResults, provider) => {
         const searchResults$ = provider.search(params).pipe(
@@ -36,7 +36,7 @@ export class SearchService {
     );
   }
 
-  private applySearchParamsToProviders(providers: Provider[], params: SearchParams) {
+  private applySearchParamsToProviders(params: SearchParams, providers: Provider[] = []) {
     if (!params.providers.length) {
       return providers;
     }

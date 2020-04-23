@@ -4,12 +4,21 @@
   </app-search>
 </nav>
 
-<section class="loading" *ngIf="isLoading">
-  <mat-spinner [diameter]="60"></mat-spinner>
-</section>
+<ng-container [ngSwitch]="isLoading">
+  <section class="loading" *ngSwitchCase="true">
+    <mat-spinner [diameter]="60"></mat-spinner>
+  </section>
 
-<section class="results">
-  <mat-card *ngFor="let media of medias">
-    <app-media [media]="media"></app-media>
-  </mat-card>
-</section>
+  <ng-container *ngSwitchDefault
+                [ngSwitch]="medias.length > 0">
+    <section class="results" *ngSwitchCase="true">
+      <mat-card *ngFor="let media of medias">
+        <app-media [media]="media"></app-media>
+      </mat-card>
+    </section>
+
+    <section *ngSwitchDefault class="no-results">
+      No results
+    </section>
+  </ng-container>
+</ng-container>

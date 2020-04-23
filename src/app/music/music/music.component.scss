@@ -26,3 +26,9 @@ nav {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+.no-results {
+  text-align: center;
+  font-size: 32px;
+  color: $gray-500
+}

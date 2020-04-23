@@ -58,6 +58,7 @@ export class MusicComponent implements OnInit {
 
   private updateMediasBySearchParams(params: SearchParams) {
     this.isLoading = true;
+    this.medias = [];
     this.changeDetectorRef.markForCheck();
 
     this.searchService.do(params).pipe(

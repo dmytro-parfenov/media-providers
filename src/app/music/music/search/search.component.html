@@ -1,10 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="apply()">
-  <div [matBadge]="results" matBadgeColor="warn">
+  <div [matBadge]="resultsCount" matBadgeColor="warn">
     <mat-form-field class="query">
-      <mat-label>Search</mat-label>
+      <mat-label>Artist</mat-label>
       <input matInput formControlName="query" aria-label="query">
     </mat-form-field>
   </div>
+
+  <mat-form-field>
+    <mat-label>Providers</mat-label>
+    <mat-select formControlName="providers" multiple>
+      <mat-select-trigger>
+        {{form.get('providers').value[0]}}
+        <span *ngIf="form.get('providers').value?.length > 1">(+{{form.get('providers').value?.length - 1}} other)</span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let provider of serviceProviders" [value]="provider.type">{{provider.type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Entity</mat-label>
@@ -13,20 +24,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Providers</mat-label>
-    <mat-select formControlName="providers" multiple>
-      <mat-select-trigger>
-        {{form.get('providers').value?.length ? form.get('providers').value[0] : ''}}
-        <span *ngIf="form.get('providers').value?.length > 1" class="example-additional-selection">
-        (+{{form.get('providers').value?.length - 1}} {{form.get('providers').value?.length === 2 ? 'other' : 'others'}})
-      </span>
-      </mat-select-trigger>
-      <mat-option *ngFor="let provider of serviceProviders" [value]="provider.type">{{provider.type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-checkbox formControlName="uniq">Show only unique results between providers</mat-checkbox>
+  <mat-checkbox formControlName="uniq">Show only unique results</mat-checkbox>
 
   <button mat-raised-button type="submit" color="primary">Apply</button>
   <button mat-raised-button type="button" (click)="reset()">Reset</button>

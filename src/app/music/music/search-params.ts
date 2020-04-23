@@ -3,8 +3,8 @@ import {ProviderContextType} from './shared/provider/provider-context-type.enum'
 
 export class SearchParams {
   constructor(public query = '',
-              public uniq: boolean | null = null,
+              public uniq = false,
               public providers: ServiceProviderType[] = [],
-              public entity?: ProviderContextType) {
+              public entity: ProviderContextType = null) {
   }
 }

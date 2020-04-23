@@ -8,17 +8,20 @@ import {SearchParams} from '../../../search-params';
 import {DeezerContext} from './deezer-context';
 import {ProviderContextType} from '../provider-context-type.enum';
 import {ServiceProviderType} from '../../../../shared/service-provider-type.enum';
+import {DeezerContextType} from './deezer-context-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DeezerProviderService implements Provider<DeezerContext> {
+export class DeezerProviderService extends Provider<DeezerContext> {
 
   type = ServiceProviderType.Deezer;
 
   entities = [ProviderContextType.Album];
 
-  constructor(private readonly deezerDataService: DeezerDataService) { }
+  constructor(private readonly deezerDataService: DeezerDataService) {
+    super();
+  }
 
   search({query}: SearchParams) {
     if (!query) {
@@ -27,7 +30,7 @@ export class DeezerProviderService implements Provider<DeezerContext> {
 
     return this.deezerDataService.searchAlbum(query).pipe(
       map<DeezerResult, DeezerContext[]>(response =>
-        response.data.map<DeezerContext>(data => ({type: ProviderContextType.Album, data}))),
+        response.data.map<DeezerContext>(data => ({type: DeezerContextType.Album, data}))),
       catchError(error => {
         console.error(`Unable to load data using Deezer provider`);
         return throwError(error);

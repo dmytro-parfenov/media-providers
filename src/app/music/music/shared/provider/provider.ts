@@ -3,10 +3,10 @@ import {SearchParams} from '../../search-params';
 import {ServiceProviderType} from '../../../shared/service-provider-type.enum';
 import {ProviderContextType} from './provider-context-type.enum';
 
-export interface Provider<C = any> {
-  type: ServiceProviderType;
+export abstract class Provider<C = any> {
+  abstract type: ServiceProviderType;
 
-  entities: ProviderContextType[];
+  entities: ProviderContextType[] = [];
 
-  search(params: SearchParams): Observable<C[]>;
+  abstract search(params: SearchParams): Observable<C[]>;
 }

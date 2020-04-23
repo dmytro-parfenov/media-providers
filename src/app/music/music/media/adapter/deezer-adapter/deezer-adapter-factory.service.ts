@@ -1,10 +1,10 @@
 import {Injectable, Injector} from '@angular/core';
 import {AdapterEmitter} from '../../shared/adapter-emitter';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {ProviderContextType} from '../../../shared/provider/provider-context-type.enum';
 import {AdapterFactory} from '../../shared/adapter-factory';
 import {DeezerContext} from '../../../shared/provider/deezer/deezer-context';
 import {DeezerAlbumComponent} from './adapter/deezer-album/deezer-album.component';
+import {DeezerContextType} from '../../../shared/provider/deezer/deezer-context-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class DeezerAdapterFactoryService extends AdapterFactory<DeezerContext> {
     const provider = this.createAdapterRefProvider(context.data, emitter);
 
     switch (context.type) {
-      case ProviderContextType.Album:
+      case DeezerContextType.Album:
         return this.createPortal(DeezerAlbumComponent, [provider], this.injector);
     }
 

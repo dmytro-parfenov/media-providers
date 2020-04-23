@@ -1,12 +1,12 @@
 import {MediaFactory} from '../../media-factory';
 import {DeezerContext} from '../../shared/provider/deezer/deezer-context';
-import {ProviderContextType} from '../../shared/provider/provider-context-type.enum';
 import {DeezerAlbumManager} from './deezer-album-manager';
+import {DeezerContextType} from '../../shared/provider/deezer/deezer-context-type.enum';
 
 export class DeezerFactory implements MediaFactory<DeezerContext> {
   create(context: DeezerContext) {
     switch (context.type) {
-      case ProviderContextType.Album:
+      case DeezerContextType.Album:
         return new DeezerAlbumManager();
     }
 

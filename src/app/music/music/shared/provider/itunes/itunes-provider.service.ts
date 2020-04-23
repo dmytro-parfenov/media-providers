@@ -8,17 +8,20 @@ import {SearchParams} from '../../../search-params';
 import {ItunesContext} from './itunes-context';
 import {ProviderContextType} from '../provider-context-type.enum';
 import {ServiceProviderType} from '../../../../shared/service-provider-type.enum';
+import {ItunesContextType} from './itunes-context-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItunesProviderService implements Provider<ItunesContext> {
+export class ItunesProviderService extends Provider<ItunesContext> {
 
   type = ServiceProviderType.iTunes;
 
   entities = [ProviderContextType.Album];
 
-  constructor(private readonly itunesDataService: ItunesDataService) { }
+  constructor(private readonly itunesDataService: ItunesDataService) {
+    super();
+  }
 
   search({query}: SearchParams) {
     if (!query) {
@@ -27,7 +30,7 @@ export class ItunesProviderService implements Provider<ItunesContext> {
 
     return this.itunesDataService.search(query).pipe(
       map<ItunesResult, ItunesContext[]>(response =>
-        response.results.map<ItunesContext>(data => ({type: ProviderContextType.Album, data}))),
+        response.results.map<ItunesContext>(data => ({type: ItunesContextType.Album, data}))),
       catchError(error => {
         console.error(`Unable to load data using iTunes provider`);
         return throwError(error);

@@ -6,7 +6,6 @@ export interface ItunesAlbum {
   collectionPrice: number;
   collectionViewUrl: string;
   copyright: string;
-  country: string;
   primaryGenreName: string;
   releaseDate: string;
   trackCount: number;

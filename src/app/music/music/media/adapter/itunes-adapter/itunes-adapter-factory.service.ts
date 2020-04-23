@@ -3,8 +3,8 @@ import {AdapterFactory} from '../../shared/adapter-factory';
 import {AdapterEmitter} from '../../shared/adapter-emitter';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
-import {ProviderContextType} from '../../../shared/provider/provider-context-type.enum';
 import {ItunesAlbumComponent} from './adapter/itunes-album/itunes-album.component';
+import {ItunesContextType} from '../../../shared/provider/itunes/itunes-context-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ItunesAdapterFactoryService extends AdapterFactory<ItunesContext> {
     const provider = this.createAdapterRefProvider(context.data, emitter);
 
     switch (context.type) {
-      case ProviderContextType.Album:
+      case ItunesContextType.Album:
         return this.createPortal(ItunesAlbumComponent, [provider], this.injector);
     }
 

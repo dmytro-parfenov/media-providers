@@ -1,20 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Output
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
 import {SearchParams} from '../search-params';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SERVICE_PROVIDER} from '../service-provider';
 import {Provider} from '../shared/provider/provider';
-import {Subject} from 'rxjs';
 import {ProviderContextType} from '../shared/provider/provider-context-type.enum';
 import {uniq} from 'lodash-es';
 
@@ -24,7 +12,7 @@ import {uniq} from 'lodash-es';
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit {
 
   @Input() set searchParams(searchParams: SearchParams) {
     this.reloadForm(searchParams);
@@ -42,10 +30,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     return this.providers || [];
   }
 
-  private formReload$ = new Subject();
-
-  private destroy$ = new Subject();
-
   constructor(private readonly formBuilder: FormBuilder,
               private readonly changeDetectorRef: ChangeDetectorRef,
               @Optional() @Inject(SERVICE_PROVIDER) private readonly providers: Provider[]) { }
@@ -58,12 +42,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     this.reloadForm();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.formReload$.complete();
   }
 
   updateResultsCount(count: string) {
@@ -90,8 +68,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   private reloadForm(searchParams?: SearchParams) {
-    this.formReload$.next();
-
     if (!searchParams) {
       searchParams = new SearchParams();
     }

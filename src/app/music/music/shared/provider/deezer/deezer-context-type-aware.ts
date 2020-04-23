@@ -1,5 +1,5 @@
-import {DeezerContextType} from './deezer-context-type.enum';
+import {DeezerEntityType} from '../../../../shared/api/deezer/deezer-entity-type.enum';
 
 export interface DeezerContextTypeAware {
-  type: DeezerContextType;
+  type: DeezerEntityType;
 }

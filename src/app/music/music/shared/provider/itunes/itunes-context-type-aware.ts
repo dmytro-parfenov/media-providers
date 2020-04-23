@@ -1,5 +1,5 @@
-import {ItunesContextType} from './itunes-context-type.enum';
+import {ItunesMusicEntityType} from '../../../../shared/api/itunes/itunes-music-entity-type.enum';
 
 export interface ItunesContextTypeAware {
-  type: ItunesContextType;
+  type: ItunesMusicEntityType;
 }

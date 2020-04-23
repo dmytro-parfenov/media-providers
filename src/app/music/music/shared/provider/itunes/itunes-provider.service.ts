@@ -8,7 +8,7 @@ import {SearchParams} from '../../../search-params';
 import {ItunesContext} from './itunes-context';
 import {ProviderContextType} from '../provider-context-type.enum';
 import {ServiceProviderType} from '../../../../shared/service-provider-type.enum';
-import {ItunesContextType} from './itunes-context-type.enum';
+import {ItunesMusicEntityType} from '../../../../shared/api/itunes/itunes-music-entity-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,18 +23,30 @@ export class ItunesProviderService extends Provider<ItunesContext> {
     super();
   }
 
-  search({query}: SearchParams) {
-    if (!query) {
+  search({query, entity}: SearchParams) {
+    const musicEntityType = this.resolveEntity(entity);
+
+    if (!query || !musicEntityType) {
       return of<ItunesContext[]>([]);
     }
 
-    return this.itunesDataService.search(query).pipe(
+    return this.itunesDataService.search(query, musicEntityType).pipe(
       map<ItunesResult, ItunesContext[]>(response =>
-        response.results.map<ItunesContext>(data => ({type: ItunesContextType.Album, data}))),
+        response.results.map<ItunesContext>(data => ({type: musicEntityType, data}))),
       catchError(error => {
         console.error(`Unable to load data using iTunes provider`);
         return throwError(error);
       }),
     );
+  }
+
+  private resolveEntity(entity: ProviderContextType) {
+    switch (entity) {
+      case ProviderContextType.Album:
+      case null:
+        return ItunesMusicEntityType.Album;
+    }
+
+    return null;
   }
 }

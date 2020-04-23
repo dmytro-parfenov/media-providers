@@ -1,5 +1,5 @@
 <nav>
-  <app-search [searchParams]="searchParams" (searchParamsChange)="onSearchParamsChange($event)">
+  <app-search [searchParams]="searchParams" [loading]="isLoading" (searchParamsChange)="onSearchParamsChange($event)">
     <app-search-results [length]="medias.length"></app-search-results>
   </app-search>
 </nav>

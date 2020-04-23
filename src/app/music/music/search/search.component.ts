@@ -20,6 +20,19 @@ export class SearchComponent implements OnInit {
     this.reloadForm(searchParams);
   }
 
+  @Input() set loading(loading: boolean) {
+    if (!this.form) {
+      return;
+    }
+
+    if (loading) {
+      this.form.disable();
+      return;
+    }
+
+    this.form.enable();
+  }
+
   @Output() searchParamsChange = new EventEmitter<SearchParams>();
 
   resultsCount = '';

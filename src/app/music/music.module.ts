@@ -32,6 +32,7 @@ import {DeezerAlbumTracksComponent} from './music/media/adapter/deezer-adapter/a
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { ItunesTrackComponent } from './music/media/adapter/itunes-adapter/adapter/itunes-track/itunes-track.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatSelectModule} from '@angular/material/select';
     BaseAdapterComponent,
     SearchComponent,
     SearchResultsComponent,
-    DeezerAlbumTracksComponent
+    DeezerAlbumTracksComponent,
+    ItunesTrackComponent
   ],
     imports: [
         CommonModule,

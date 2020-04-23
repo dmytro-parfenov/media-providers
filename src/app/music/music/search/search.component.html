@@ -1,10 +1,8 @@
-<form [formGroup]="form" (ngSubmit)="apply()">
-  <div [matBadge]="resultsCount" matBadgeColor="warn">
-    <mat-form-field class="query">
-      <mat-label>Artist</mat-label>
-      <input matInput formControlName="query" aria-label="query">
-    </mat-form-field>
-  </div>
+<form [formGroup]="form" (ngSubmit)="apply()" [matBadge]="resultsCount" matBadgeColor="warn">
+  <mat-form-field class="query">
+    <mat-label>Artist</mat-label>
+    <input matInput formControlName="query" aria-label="query">
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Providers</mat-label>

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DeezerResult} from './deezer/deezer-result';
 import {DeezerEntityType} from './deezer/deezer-entity-type.enum';
+import {DeezerTrack} from './deezer/deezer-track';
 
 /**
  * @see https://developers.deezer.com/api
@@ -21,7 +22,7 @@ export class DeezerDataService {
   }
 
   getAlbumTracks(albumId: number) {
-    return this.httpClient.jsonp<DeezerResult>(`${this.resourceUrl}/album/${albumId}/tracks&output=jsonp`, 'callback');
+    return this.httpClient.jsonp<DeezerResult<DeezerTrack>>(`${this.resourceUrl}/album/${albumId}/tracks&output=jsonp`, 'callback');
   }
 
 }

@@ -9,7 +9,7 @@ import {Media} from './shared/media/media';
 import {MediaAdapterFactoryService} from './media/media-adapter-factory.service';
 import {ItunesAdapterFactoryService} from './media/adapter/itunes-adapter/itunes-adapter-factory.service';
 import {DeezerAdapterFactoryService} from './media/adapter/deezer-adapter/deezer-adapter-factory.service';
-import {of} from 'rxjs';
+import {throwError} from 'rxjs';
 import {MediaFactoryService} from './media-factory.service';
 import {MediasUtilsService} from './medias-utils.service';
 
@@ -66,9 +66,9 @@ export class MusicComponent implements OnInit {
         this.medias = this.mediasUtilsService.applySearchParams(medias, params);
         this.changeDetectorRef.markForCheck();
       }),
-      catchError(() => {
+      catchError(error => {
         console.error(`Unable to load results`);
-        return of(null);
+        return throwError(error);
       }),
       finalize(() => {
         this.isLoading = false;

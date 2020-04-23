@@ -1,3 +1,4 @@
 export enum ProviderContextType {
-  Album = 'Album'
+  Album = 'Album',
+  Track = 'Track'
 }

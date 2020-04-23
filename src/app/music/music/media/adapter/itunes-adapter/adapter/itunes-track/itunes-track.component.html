@@ -1,0 +1,27 @@
+<main *ngIf="track">
+  <section>
+    <mat-card-header>
+      <mat-card-title>{{track.trackName}}</mat-card-title>
+      <mat-card-subtitle>{{track.artistName}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="cover">
+      <img mat-card-sm-image [src]="track.artworkUrl100" alt="cover" class="cover">
+    </div>
+
+    <mat-card-content class="content">
+      <div>Album: {{track.collectionName}}</div>
+      <div>Release date: {{releaseDate}}</div>
+      <div>Genre: {{track.primaryGenreName}}</div>
+      <div>Price: {{track.trackPrice}}{{track.currency}}</div>
+      <audio [src]="track.previewUrl" controls class="preview"></audio>
+    </mat-card-content>
+  </section>
+
+  <footer>
+    <mat-card-actions class="actions">
+      <a mat-button [href]="track.trackViewUrl" target="_blank">Track</a>
+      <a mat-button [href]="track.artistViewUrl" target="_blank">Artist</a>
+    </mat-card-actions>
+  </footer>
+</main>

@@ -37,7 +37,7 @@ export class DeezerAlbumComponent {
     this.areTracksLoading = true;
 
     this.deezerDataService.getAlbumTracks(this.album.id).pipe(
-      map<DeezerResult, DeezerTrack[]>(response => response.data),
+      map<DeezerResult<DeezerTrack>, DeezerTrack[]>(response => response.data),
       tap(tracks => {
         this.bottomSheet.open<DeezerAlbumTracksComponent, DeezerAlbumTracksData>(DeezerAlbumTracksComponent,
           {data: {

@@ -1,0 +1,35 @@
+main {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.preview {
+  margin-top: 16px;
+  width: 100%;
+}

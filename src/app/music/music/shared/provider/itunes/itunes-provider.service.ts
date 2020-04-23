@@ -17,7 +17,7 @@ export class ItunesProviderService extends Provider<ItunesContext> {
 
   type = ServiceProviderType.iTunes;
 
-  entities = [ProviderContextType.Album];
+  entities = [ProviderContextType.Album, ProviderContextType.Track];
 
   constructor(private readonly itunesDataService: ItunesDataService) {
     super();
@@ -42,6 +42,8 @@ export class ItunesProviderService extends Provider<ItunesContext> {
 
   private resolveEntity(entity: ProviderContextType) {
     switch (entity) {
+      case ProviderContextType.Track:
+        return ItunesMusicEntityType.MusicTrack;
       case ProviderContextType.Album:
       case null:
         return ItunesMusicEntityType.Album;

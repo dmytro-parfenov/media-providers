@@ -5,6 +5,7 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {ItunesContext} from '../../../shared/provider/itunes/itunes-context';
 import {ItunesAlbumComponent} from './adapter/itunes-album/itunes-album.component';
 import {ItunesMusicEntityType} from '../../../../shared/api/itunes/itunes-music-entity-type.enum';
+import {ItunesTrackComponent} from './adapter/itunes-track/itunes-track.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class ItunesAdapterFactoryService extends AdapterFactory<ItunesContext> {
     switch (context.type) {
       case ItunesMusicEntityType.Album:
         return this.createPortal(ItunesAlbumComponent, [provider], this.injector);
+      case ItunesMusicEntityType.MusicTrack:
+        return this.createPortal(ItunesTrackComponent, [provider], this.injector);
     }
 
     throw new Error(`Component type does not defined for ${context.type} type of Itunes adapter`);

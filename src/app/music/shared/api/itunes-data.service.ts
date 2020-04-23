@@ -15,8 +15,8 @@ export class ItunesDataService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  search(term: string, entity: ItunesMusicEntityType, media = 'music') {
+  search(term: string, entity: ItunesMusicEntityType, attribute = 'artistTerm', media = 'music') {
     return this.httpClient
-      .jsonp<ItunesResult>(`${this.resourceUrl}/search?term=${term}&media=${media}&entity=${entity}`, 'callback');
+      .jsonp<ItunesResult>(`${this.resourceUrl}/search?term=${term}&media=${media}&entity=${entity}&attribute=${attribute}`, 'callback');
   }
 }

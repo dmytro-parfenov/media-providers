@@ -9,6 +9,8 @@ import {ItunesContext} from './itunes-context';
 import {ProviderContextType} from '../provider-context-type.enum';
 import {ServiceProviderType} from '../../../../shared/service-provider-type.enum';
 import {ItunesMusicEntityType} from '../../../../shared/api/itunes/itunes-music-entity-type.enum';
+import {ProviderQueryType} from '../provider-query-type.enum';
+import {ItunesAttributeType} from '../../../../shared/api/itunes/itunes-attribute-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,25 +21,38 @@ export class ItunesProviderService extends Provider<ItunesContext> {
 
   entities = [ProviderContextType.Album, ProviderContextType.Track];
 
+  queryTypes = [ProviderQueryType.Artist];
+
   constructor(private readonly itunesDataService: ItunesDataService) {
     super();
   }
 
-  search({query, entity}: SearchParams) {
-    const musicEntityType = this.resolveEntity(entity);
+  search({query, entity, queryType}: SearchParams) {
+    const entityValue = this.resolveEntity(entity);
+    const queryTypeValue = this.resolveAttribute(queryType);
 
-    if (!query || !musicEntityType) {
+    if (!query || !entityValue || !queryTypeValue) {
       return of<ItunesContext[]>([]);
     }
 
-    return this.itunesDataService.search(query, musicEntityType).pipe(
+    return this.itunesDataService.search(query, entityValue, queryTypeValue).pipe(
       map<ItunesResult, ItunesContext[]>(response =>
-        response.results.map<ItunesContext>(data => ({type: musicEntityType, data}))),
+        response.results.map<ItunesContext>(data => ({type: entityValue, data}))),
       catchError(error => {
         console.error(`Unable to load data using iTunes provider`);
         return throwError(error);
       }),
     );
+  }
+
+  private resolveAttribute(queryType: ProviderQueryType) {
+    switch (queryType) {
+      case ProviderQueryType.Artist:
+      case null:
+        return ItunesAttributeType.Artist;
+    }
+
+    return null;
   }
 
   private resolveEntity(entity: ProviderContextType) {

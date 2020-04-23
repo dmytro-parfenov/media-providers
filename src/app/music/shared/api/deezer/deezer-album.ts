@@ -6,5 +6,5 @@ export interface DeezerAlbum {
   cover_medium: string;
   nb_tracks: number;
   link: string;
-  artist: DeezerArtist;
+  artist: Pick<DeezerArtist, 'link' | 'name' | 'picture_medium'>;
 }

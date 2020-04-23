@@ -6,6 +6,7 @@ import {Provider} from '../shared/provider/provider';
 import {ProviderContextType} from '../shared/provider/provider-context-type.enum';
 import {uniq} from 'lodash-es';
 import {ProviderSortingType} from '../shared/provider/provider-sorting-type.enum';
+import {ProviderQueryType} from '../shared/provider/provider-query-type.enum';
 
 @Component({
   selector: 'app-search',
@@ -27,6 +28,8 @@ export class SearchComponent implements OnInit {
 
   entities: ProviderContextType[] = [];
 
+  queryTypes: ProviderQueryType[] = [];
+
   sortingTypes: ProviderSortingType[] = [
     ProviderSortingType.NameAsc,
     ProviderSortingType.NameDesc,
@@ -44,6 +47,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.updateEntities();
+    this.updateQueryTypes();
 
     if (this.form) {
       return;
@@ -70,6 +74,7 @@ export class SearchComponent implements OnInit {
       this.form.get('uniq').value,
       this.form.get('providers').value,
       this.form.get('entity').value,
+      this.form.get('queryType').value,
       this.form.get('sortBy').value
     );
 
@@ -86,6 +91,7 @@ export class SearchComponent implements OnInit {
       this.form.get('uniq').setValue(searchParams.uniq);
       this.form.get('providers').setValue(searchParams.providers);
       this.form.get('entity').setValue(searchParams.entity);
+      this.form.get('queryType').setValue(searchParams.queryType);
       this.form.get('sortBy').setValue(searchParams.sortBy);
     } else {
       this.form = this.formBuilder.group({
@@ -93,9 +99,18 @@ export class SearchComponent implements OnInit {
         uniq: [searchParams.uniq],
         providers: [searchParams.providers],
         entity: [searchParams.entity],
+        queryType: [searchParams.queryType],
         sortBy: [searchParams.sortBy]
       });
     }
+  }
+
+  private updateQueryTypes() {
+    const queryTypes = this.serviceProviders.reduce<ProviderQueryType[]>((previousValue, currentValue) =>
+      previousValue.concat(currentValue.queryTypes), []
+    );
+
+    this.queryTypes = uniq(queryTypes);
   }
 
   private updateEntities() {

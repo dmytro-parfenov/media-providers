@@ -1,7 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="apply()" [matBadge]="resultsCount" matBadgeColor="warn">
   <mat-form-field class="query">
-    <mat-label>Artist</mat-label>
+    <mat-label>{{this.form.get('queryType').value ? this.form.get('queryType').value : 'Search'}}</mat-label>
     <input matInput formControlName="query" aria-label="query">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Search by</mat-label>
+    <mat-select formControlName="queryType">
+      <mat-option *ngFor="let queryType of queryTypes" [value]="queryType">{{queryType}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Entity</mat-label>
+    <mat-select formControlName="entity">
+      <mat-option *ngFor="let entity of entities" [value]="entity">{{entity}}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field>
@@ -12,13 +26,6 @@
         <span *ngIf="form.get('providers').value?.length > 1">(+{{form.get('providers').value?.length - 1}} other)</span>
       </mat-select-trigger>
       <mat-option *ngFor="let provider of serviceProviders" [value]="provider.type">{{provider.type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Entity</mat-label>
-    <mat-select formControlName="entity">
-      <mat-option *ngFor="let entity of entities" [value]="entity">{{entity}}</mat-option>
     </mat-select>
   </mat-form-field>
 

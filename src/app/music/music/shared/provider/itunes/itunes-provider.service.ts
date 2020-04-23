@@ -28,6 +28,9 @@ export class ItunesProviderService extends Provider<ItunesContext> {
   }
 
   search({query, entity, queryType}: SearchParams) {
+    entity = entity ? entity : this.defaultEntity;
+    queryType = queryType ? queryType : this.defaultQueryType;
+
     const entityValue = this.resolveEntity(entity);
     const queryTypeValue = this.resolveAttribute(queryType);
 
@@ -48,7 +51,6 @@ export class ItunesProviderService extends Provider<ItunesContext> {
   private resolveAttribute(queryType: ProviderQueryType) {
     switch (queryType) {
       case ProviderQueryType.Artist:
-      case null:
         return ItunesAttributeType.Artist;
     }
 
@@ -60,7 +62,6 @@ export class ItunesProviderService extends Provider<ItunesContext> {
       case ProviderContextType.Track:
         return ItunesMusicEntityType.Song;
       case ProviderContextType.Album:
-      case null:
         return ItunesMusicEntityType.Album;
     }
 

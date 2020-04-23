@@ -29,6 +29,9 @@ export class DeezerProviderService extends Provider<DeezerContext> {
   }
 
   search({query, entity, queryType}: SearchParams) {
+    entity = entity ? entity : this.defaultEntity;
+    queryType = queryType ? queryType : this.defaultQueryType;
+
     const entityValue = this.resolveEntity(entity);
     const queryTypeValue = this.resolveQueryType(queryType);
 
@@ -78,7 +81,6 @@ export class DeezerProviderService extends Provider<DeezerContext> {
   private resolveQueryType(queryType: ProviderQueryType) {
     switch (queryType) {
       case ProviderQueryType.Artist:
-      case null:
         return DeezerQueryType.Artist;
       case ProviderQueryType.Track:
         return DeezerQueryType.Track;
@@ -90,7 +92,6 @@ export class DeezerProviderService extends Provider<DeezerContext> {
   private resolveEntity(entity: ProviderContextType) {
     switch (entity) {
       case ProviderContextType.Album:
-      case null:
         return DeezerEntityType.Album;
     }
 

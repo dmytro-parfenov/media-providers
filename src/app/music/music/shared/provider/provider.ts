@@ -7,6 +7,10 @@ import {ProviderQueryType} from './provider-query-type.enum';
 export abstract class Provider<C = any> {
   abstract type: ServiceProviderType;
 
+  defaultQueryType: ProviderQueryType = ProviderQueryType.Artist;
+
+  defaultEntity: ProviderContextType = ProviderContextType.Album;
+
   entities: ProviderContextType[] = [];
 
   queryTypes: ProviderQueryType[] = [];

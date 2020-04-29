@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output} from '@angular/core';
 import {SearchParams} from '../search-params';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {SERVICE_PROVIDER} from '../service-provider';
+import {SERVICE_PROVIDERS} from '../service-providers.key';
 import {Provider} from '../shared/provider/provider';
 import {ProviderContextType} from '../shared/provider/provider-context-type.enum';
 import {uniq} from 'lodash-es';
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
 
   constructor(private readonly formBuilder: FormBuilder,
               private readonly changeDetectorRef: ChangeDetectorRef,
-              @Optional() @Inject(SERVICE_PROVIDER) private readonly providers: Provider[]) { }
+              @Optional() @Inject(SERVICE_PROVIDERS) private readonly providers: Provider[]) { }
 
   ngOnInit() {
     this.updateEntities();

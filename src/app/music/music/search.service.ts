@@ -1,6 +1,6 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {forkJoin, Observable, of} from 'rxjs';
-import {SERVICE_PROVIDER} from './service-provider';
+import {SERVICE_PROVIDERS} from './service-providers.key';
 import {Provider} from './shared/provider/provider';
 import {catchError, map} from 'rxjs/operators';
 import {Media} from './shared/media/media';
@@ -11,7 +11,7 @@ import {SearchParams} from './search-params';
 })
 export class SearchService {
 
-  constructor(@Optional() @Inject(SERVICE_PROVIDER) private readonly providers: Provider[]) {}
+  constructor(@Optional() @Inject(SERVICE_PROVIDERS) private readonly providers: Provider[]) {}
 
   do(params: SearchParams) {
     const providers = this.applySearchParamsToProviders(params, this.providers);

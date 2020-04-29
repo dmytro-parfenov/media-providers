@@ -7,7 +7,7 @@ import {ItunesDataService} from './shared/api/itunes-data.service';
 import {DeezerProviderService} from './music/shared/provider/deezer/deezer-provider.service';
 import {ItunesProviderService} from './music/shared/provider/itunes/itunes-provider.service';
 import {SearchService} from './music/search.service';
-import {SERVICE_PROVIDER} from './music/service-provider';
+import {SERVICE_PROVIDERS} from './music/service-providers.key';
 import {SearchParamsResolverService} from './resolver/search-params-resolver.service';
 import {SearchParamsService} from './music/search-params.service';
 import {MediaComponent} from './music/media/media.component';
@@ -71,8 +71,8 @@ import { ItunesTrackComponent } from './music/media/adapter/itunes-adapter/adapt
     SearchService,
     SearchParamsResolverService,
     SearchParamsService,
-    {provide: SERVICE_PROVIDER, useClass: DeezerProviderService, multi: true},
-    {provide: SERVICE_PROVIDER, useClass: ItunesProviderService, multi: true}
+    {provide: SERVICE_PROVIDERS, useClass: DeezerProviderService, multi: true},
+    {provide: SERVICE_PROVIDERS, useClass: ItunesProviderService, multi: true}
   ]
 })
 export class MusicModule { }
